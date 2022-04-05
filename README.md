@@ -12,7 +12,7 @@ Team Members: Kabila Williams, Tiffany Lastimosa, Andrew Moran
 
 ## 3. Brief description of the project
 
-LetsBookIt is a tool that assists with providing a shared platform for different types of markets, fairs, conventions, or other types of event-based organizations to connect with Vendors and allow the Vendors to then book their preferred Stand spaces at these events.
+LetsBookIt is a tool that assists with providing a shared platform for different types of markets, fairs, conventions, or other types of event-based organizations to give vendors the usability to book their preferred stand spaces at events.
 
 ## 4. Description of the two user data models
 
@@ -22,7 +22,7 @@ The user data model **Vendor Staff** is a **User** that has a **Role** associate
 
 ## 5. Description of the three domain object data models
 
-The domain object data model **Market** represents a market, fair, convention, or other organization that puts on **Events** at a specified frequency for **Vendors** to book **Stands** at.
+The domain object data model **Market** represents a market, fair, convention, or other organization (e.g. Emerald City Comic Convention) that puts on **Events** (e.g. Friday, Saturday, Sunday, etc.) at a specified frequency for **Vendors** to book **Stands**.
 
 The domain object data model **Event** is a scheduled occurrence for a **Market** and consists of **Stands** for **Vendors** to book.
 
