@@ -54,5 +54,5 @@ The **Frequency** enumeration consists of different frequency rates at which a *
 
 ## 9. Description of the user interface requirements
 
-NEED TO DISCUSS
+N/A at current development stage.
 
