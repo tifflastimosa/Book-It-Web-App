@@ -1,6 +1,7 @@
 package com.libby.letsbookit.model;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,14 +16,30 @@ public class Stand {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   // TODO: How to implement fks?
+  // TODO: Change this from Integer to Event object to establish relationship
   private Integer eventId;
-  private Integer vendorId;
+
+  @Column(name = "table_name")
   private String tableName;
+  @Column(name = "table_notes")
   private String tableNotes;
+  @Column(name = "booked")
   private Boolean booked;
-  private Double price;
-  // TODO: How to capture dates for MySQL?
-  private LocalDateTime lastUpdated;
+  @Column(name = "price")
+  private Float price;
+
+  public Stand(Integer id, Integer eventId, String tableName, String tableNotes,
+      Boolean booked, Float price) {
+    this.id = id;
+    this.eventId = eventId;
+    this.tableName = tableName;
+    this.tableNotes = tableNotes;
+    this.booked = booked;
+    this.price = price;
+  }
+
+  public Stand() {
+  }
 
   public Integer getId() {
     return id;
@@ -38,14 +55,6 @@ public class Stand {
 
   public void setEventId(Integer eventId) {
     this.eventId = eventId;
-  }
-
-  public Integer getVendorId() {
-    return vendorId;
-  }
-
-  public void setVendorId(Integer vendorId) {
-    this.vendorId = vendorId;
   }
 
   public String getTableName() {
@@ -72,20 +81,13 @@ public class Stand {
     this.booked = booked;
   }
 
-  public Double getPrice() {
+  public Float getPrice() {
     return price;
   }
 
-  public void setPrice(Double price) {
+  public void setPrice(Float price) {
     this.price = price;
   }
 
-  public LocalDateTime getLastUpdated() {
-    return lastUpdated;
-  }
-
-  public void setLastUpdated(LocalDateTime lastUpdated) {
-    this.lastUpdated = lastUpdated;
-  }
 
 }

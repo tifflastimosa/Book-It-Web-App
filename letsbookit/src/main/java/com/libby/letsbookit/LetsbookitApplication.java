@@ -8,6 +8,8 @@ public class LetsbookitApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LetsbookitApplication.class, args);
+		System.out.println("Success, program is running!");
+
 	}
 
 }
