@@ -1,6 +1,6 @@
 package com.libby.letsbookit.daos;
 
-import com.libby.letsbookit.model.User;
+import com.libby.letsbookit.model.User.User;
 import java.util.List;
 
 public interface IUserService {
