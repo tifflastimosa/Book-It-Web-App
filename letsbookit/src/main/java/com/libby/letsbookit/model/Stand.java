@@ -15,8 +15,7 @@ public class Stand {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  // TODO: How to implement fks?
-  // TODO: Change this from Integer to Event object to establish relationship
+
   private Integer eventId;
 
   @Column(name = "table_name")
