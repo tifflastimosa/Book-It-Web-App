@@ -8,6 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+/**
+ * A class that represents a stand that is at a scheduled event that can be booked by a vendor
+ */
+
 @Entity
 @Table(name="stands")
 public class Stand {
@@ -15,8 +20,8 @@ public class Stand {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-
   private Integer eventId;
+  private Integer vendorId;
 
   @Column(name = "table_name")
   private String tableName;
@@ -27,16 +32,18 @@ public class Stand {
   @Column(name = "price")
   private Float price;
 
-  public Stand(Integer id, Integer eventId, String tableName, String tableNotes,
+  public Stand(Integer id, Integer eventId, Integer vendorId, String tableName, String tableNotes,
       Boolean booked, Float price) {
     this.id = id;
     this.eventId = eventId;
+    this.vendorId = vendorId;
     this.tableName = tableName;
     this.tableNotes = tableNotes;
     this.booked = booked;
     this.price = price;
   }
 
+  // Can this be removed or does it serve a purpose?
   public Stand() {
   }
 
@@ -89,4 +96,11 @@ public class Stand {
   }
 
 
+  public Integer getVendorId() {
+    return vendorId;
+  }
+
+  public void setVendorId(Integer vendorId) {
+    this.vendorId = vendorId;
+  }
 }
