@@ -1,12 +1,12 @@
-package com.libby.letsbookit.daos;
+package com.libby.letsbookit.daos.userservice;
 
 import com.libby.letsbookit.model.User.User;
 import java.util.List;
 
 public interface IUserService {
 
-//  public User createUser(User user);
-//
+  <T> void createUser(T user);
+
 //  public User updateUser(User user, Integer id);
 //
 //  public void deleteUser(int id);

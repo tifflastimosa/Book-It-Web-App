@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @NoRepositoryBean
 public interface UserBaseRepository<T extends User> extends CrudRepository<T, Integer> {
 
+  // example
   public T findByEmail(String email);
-
 
 
 }

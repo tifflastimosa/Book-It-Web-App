@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity(name = "market_staff")
@@ -11,6 +12,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class MarketStaff extends User{  // maps the properties from parent class
 
   // the pk of the MarketStaff
+  @Id
+  private Integer id;
 
   @Enumerated(EnumType.STRING)
   private Roles role;
