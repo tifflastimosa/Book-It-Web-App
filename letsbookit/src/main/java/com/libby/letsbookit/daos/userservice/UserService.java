@@ -1,27 +1,24 @@
 package com.libby.letsbookit.daos.userservice;
 
-import com.libby.letsbookit.daos.userservice.IUserService;
+import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.model.User.User;
 import com.libby.letsbookit.repositories.userrepository.UserBaseRepository;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
-public class UserService<T extends User> implements IUserService {
+public abstract class UserService<T extends User> implements IUserService {
 
-  @Qualifier("userRepository")
   @Autowired
-  private UserBaseRepository userRepo;
+  private UserBaseRepository userRepository;
 
   @Override
-  public <T> void createUser(T user) {
-    this.userRepo.save(user);
+  public Integer createUser(String username, String password, String firstName, String lastName,
+      String email, String dateOfBirth, Roles role) {
+    return null;
   }
 
-//  @Override
+  //  @Override
 //  public User updateUser(User user, Integer id) {
 //    User updatedUser;
 //    Optional<User> savedUser = this.userRepository.findById(id);
