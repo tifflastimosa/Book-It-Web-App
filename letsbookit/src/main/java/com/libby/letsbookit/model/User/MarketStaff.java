@@ -11,21 +11,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(name = "id")
 public class MarketStaff extends User{  // maps the properties from parent class
 
-  // the pk of the MarketStaff
-  @Id
-  private Integer id;
-
   @Enumerated(EnumType.STRING)
   private Roles role;
 
-  public MarketStaff(Integer id, String username, String password, String firstName,
-      String lastName, String email, LocalDateTime dateOfBirth,
-      Roles role) {
-    super(id, username, password, firstName, lastName, email, dateOfBirth);
+  public MarketStaff(String username, String password, String firstName, String lastName,
+      String email, LocalDateTime dateOfBirth, Roles role) {
+    super(username, password, firstName, lastName, email, dateOfBirth);
     this.role = role;
-  }
-
-  public MarketStaff() {
-
   }
 }

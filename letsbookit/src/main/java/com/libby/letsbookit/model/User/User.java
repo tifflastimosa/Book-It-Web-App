@@ -42,9 +42,8 @@ public abstract class User {
   @Column(name = "date_of_birth")
   private LocalDateTime dateOfBirth;
 
-  public User(Integer id, String username, String password, String firstName,
+  public User(String username, String password, String firstName,
       String lastName, String email, LocalDateTime dateOfBirth) {
-    this.id = id;
     this.username = username;
     this.password = password;
     this.firstName = firstName;
