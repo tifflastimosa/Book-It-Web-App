@@ -23,4 +23,12 @@ public class MarketStaff extends User{  // maps the properties from parent class
   public MarketStaff() {
 
   }
+
+  public Roles getRole() {
+    return role;
+  }
+
+  public void setRole(Roles role) {
+    this.role = role;
+  }
 }
