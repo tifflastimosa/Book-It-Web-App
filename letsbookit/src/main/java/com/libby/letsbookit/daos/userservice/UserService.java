@@ -13,8 +13,9 @@ public abstract class UserService<T extends User> implements IUserService {
   private UserBaseRepository userRepository;
 
   @Override
-  public void createUser(String username, String password, String firstName, String lastName,
+  public Integer createUser(String username, String password, String firstName, String lastName,
       String email, String dateOfBirth, Roles role) {
+    return null;
   }
 
   //  @Override

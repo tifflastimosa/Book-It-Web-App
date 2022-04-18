@@ -11,14 +11,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class LetsbookitApplication {
 
-	@Autowired
-	private static UserBaseRepository<MarketStaff> marketStaffRepository;
+
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext configurableApplicationContext =
-				SpringApplication.run(LetsbookitApplication.class, args);
+		SpringApplication.run(LetsbookitApplication.class, args);
 
-		marketStaffRepository = configurableApplicationContext.getBean(MarketStaffRepository.class);
+
 		System.out.println("Success, program is running!");
 	}
 

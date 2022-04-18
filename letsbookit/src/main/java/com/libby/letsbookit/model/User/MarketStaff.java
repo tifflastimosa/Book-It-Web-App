@@ -19,4 +19,8 @@ public class MarketStaff extends User{  // maps the properties from parent class
     super(username, password, firstName, lastName, email, dateOfBirth);
     this.role = role;
   }
+
+  public MarketStaff() {
+
+  }
 }

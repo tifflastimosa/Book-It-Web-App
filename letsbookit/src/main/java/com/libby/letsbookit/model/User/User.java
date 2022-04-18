@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * Super class that represents a user who will either be a market staff or a vendor, both of
  * which are subtype.
  */
-@Entity(name = "users")
+@Entity(name = "joined_base_user")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
