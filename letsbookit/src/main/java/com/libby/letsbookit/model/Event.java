@@ -19,9 +19,12 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer marketId;
 
-    @Column(name = "name")
+    // TODO: implement market for next milestone
+    @Column(name = "market_id")
+    private Integer marketId = 0000;
+
+    @Column(name = "event_name")
     private String name;
     @Column(name = "start")
     private LocalDateTime start;
@@ -35,7 +38,6 @@ public class Event {
   /**
    * Constructor for Event.
    *
-   * @param marketId the foreign key that represents the marketId.
    * @param name the name of the event.
    * @param start the start time of the event.
    * @param end the end time of the event.
@@ -43,10 +45,8 @@ public class Event {
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-    public Event (Integer id, Integer marketId, String name, LocalDateTime start, LocalDateTime end,
+    public Event(String name, LocalDateTime start, LocalDateTime end,
         String location, String venueLayout) {
-      this.id = id;
-      this.marketId = marketId;
       this.name = name;
       this.start = start;
       this.end = end;
@@ -73,7 +73,7 @@ public class Event {
    *
    * @param id The id of the event.
    */
-  public void setId() { this.id = id;}
+  public void setId(Integer id) { this.id = id;}
 
   /**
    * Gets the marketId of the event.
@@ -88,7 +88,7 @@ public class Event {
    *
    * @param marketId The id of the event.
    */
-  public void setMarketId(){ this.marketId = marketId; }
+  public void setMarketId(Integer marketId){ this.marketId = marketId; }
 
   /**
    * Gets the name of the event.
@@ -100,20 +100,20 @@ public class Event {
   /**
    * Sets the id of the event.
    *
-   * @param id The id of the event.
+   * @param name The name of the event.
    */
-  public void setName() {this.name = name; }
+  public void setName(String name) {this.name = name; }
 
   public LocalDateTime getStart(){ return start; }
-  public void setStart() {this.start = start; }
+  public void setStart(LocalDateTime start) {this.start = start; }
 
   public LocalDateTime getEnd() {return end; }
-  public void setEnd() {this.end = end; }
+  public void setEnd(LocalDateTime end) {this.end = end; }
 
   public String getLocation() {return location; }
-  public void setLocation() {this.location = location; }
+  public void setLocation(String location) {this.location = location; }
 
   public String getVenueLayout() {return venueLayout; }
-  public void setVenueLayout() {this.venueLayout = venueLayout; }
+  public void setVenueLayout(String venueLayout) {this.venueLayout = venueLayout; }
 
 }
