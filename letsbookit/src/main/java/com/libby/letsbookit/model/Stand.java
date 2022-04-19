@@ -6,7 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+
+/**
+ * A class that represents a stand that is at a scheduled event that can be booked by a vendor
+ */
 
 @Entity
 @Table(name="stands")
@@ -16,6 +23,7 @@ public class Stand {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @JoinColumn(name="event_Id")
   private Integer eventId;
 
   @Column(name = "table_name")
@@ -27,9 +35,17 @@ public class Stand {
   @Column(name = "price")
   private Float price;
 
-  public Stand(Integer id, Integer eventId, String tableName, String tableNotes,
+  /**
+   * Constructor for stand.
+   *
+   * @param eventId the stand belongs to.
+   * @param tableName that helps identify the stand.
+   * @param tableNotes that describe the stand.
+   * @param booked status of the stand.
+   * @param price it costs to rent the stand.
+   */
+  public Stand(Integer eventId, String tableName, String tableNotes,
       Boolean booked, Float price) {
-    this.id = id;
     this.eventId = eventId;
     this.tableName = tableName;
     this.tableNotes = tableNotes;
@@ -37,6 +53,9 @@ public class Stand {
     this.price = price;
   }
 
+  /**
+   * Constructor with no parameters for Stand.
+   */
   public Stand() {
   }
 
@@ -52,7 +71,7 @@ public class Stand {
     return eventId;
   }
 
-  public void setEventId(Integer eventId) {
+  public void setEvent(Integer eventId) {
     this.eventId = eventId;
   }
 
@@ -87,6 +106,5 @@ public class Stand {
   public void setPrice(Float price) {
     this.price = price;
   }
-
 
 }
