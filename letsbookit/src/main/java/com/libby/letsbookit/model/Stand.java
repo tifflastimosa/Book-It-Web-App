@@ -23,13 +23,8 @@ public class Stand {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @ManyToOne
   @JoinColumn(name="event_Id")
-  private Event event;
-
-  @ManyToOne
-  @JoinColumn(name="vendor_Id")
-  private Vendor vendor;
+  private Integer eventId;
 
   @Column(name = "table_name")
   private String tableName;
@@ -43,17 +38,15 @@ public class Stand {
   /**
    * Constructor for stand.
    *
-   * @param event the stand belongs to.
-   * @param vendor that has booked the stand.
+   * @param eventId the stand belongs to.
    * @param tableName that helps identify the stand.
    * @param tableNotes that describe the stand.
    * @param booked status of the stand.
    * @param price it costs to rent the stand.
    */
-  public Stand(Event event, Vendor vendor, String tableName, String tableNotes,
+  public Stand(Integer eventId, String tableName, String tableNotes,
       Boolean booked, Float price) {
-    this.event = event;
-    this.vendor = vendor;
+    this.eventId = eventId;
     this.tableName = tableName;
     this.tableNotes = tableNotes;
     this.booked = booked;
@@ -74,12 +67,12 @@ public class Stand {
     this.id = id;
   }
 
-  public Event getEvent() {
-    return event;
+  public Integer getEventId() {
+    return eventId;
   }
 
-  public void setEvent(Event event) {
-    this.event = event;
+  public void setEvent(Integer eventId) {
+    this.eventId = eventId;
   }
 
   public String getTableName() {
@@ -114,11 +107,4 @@ public class Stand {
     this.price = price;
   }
 
-  public Vendor getVendor() {
-    return vendor;
-  }
-
-  public void setVendor(Vendor vendor) {
-    this.vendor = vendor;
-  }
 }
