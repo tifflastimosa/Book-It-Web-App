@@ -13,6 +13,18 @@ public class EventService {
   @Autowired
   private EventRepository eventRepository;
 
+  /**
+   * Provides the business logic to create an event object and then add it as a record to the
+   * database.
+   *
+   * @param name The name of the event.
+   * @param start The start time of the event.
+   * @param end The end time of the event.
+   * @param location The location of the event.
+   * @param venueLayout The layout of the venue where the event will be held.
+   * @return
+   */
+  @Override
   public Integer createEvent(String name, String start, String end,
       String location, String venueLayout) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -23,5 +35,23 @@ public class EventService {
     return event.getId();
   }
 
+  /**
+   * Updates the event in the database.
+   *
+   * @param name The name of the event.
+   * @param start The start time of the event.
+   * @param end The end time of the event.
+   * @param location The location of the event.
+   * @param venueLayout The layout of the venue where the event will be held.
+   * @return
+   */
+  @Override
+  public Integer updateEvent(String name, String start, String end, String location,
+      String venueLayout) {
+    Event event = (Event) this.get
+
+  }
+      this.EventRepository.save();
+      return event
 
 }
