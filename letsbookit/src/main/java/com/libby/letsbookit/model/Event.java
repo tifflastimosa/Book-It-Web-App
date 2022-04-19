@@ -27,9 +27,9 @@ public class Event {
     @Column(name = "event_name")
     private String name;
     @Column(name = "start")
-    private LocalDateTime start;
+    private String start;
     @Column(name = "end")
-    private LocalDateTime end;
+    private String end;
     @Column(name = "location")
     private String location;
     @Column(name = "venue_Layout")
@@ -45,7 +45,7 @@ public class Event {
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-    public Event(String name, LocalDateTime start, LocalDateTime end,
+    public Event(String name, String start, String end,
         String location, String venueLayout) {
       this.name = name;
       this.start = start;
@@ -104,16 +104,60 @@ public class Event {
    */
   public void setName(String name) {this.name = name; }
 
-  public LocalDateTime getStart(){ return start; }
-  public void setStart(LocalDateTime start) {this.start = start; }
+  /**
+   * Gets the start time of the event.
+   *
+   * @return the start time of the event.
+   */
+  public String getStart(){ return start; }
 
-  public LocalDateTime getEnd() {return end; }
-  public void setEnd(LocalDateTime end) {this.end = end; }
+  /**
+   * Sets the start time of the event.
+   *
+   * @param start The start time of the event.
+   */
+  public void setStart(String start) {this.start = start; }
 
+  /**
+   * Gets the end time of the event.
+   *
+   * @return the end time of the event.
+   */
+  public String getEnd() {return end; }
+
+  /**
+   * Sets the end time of the event.
+   *
+   * @param end The end time of the event.
+   */
+  public void setEnd(String end) {this.end = end; }
+
+  /**
+   * Gets the location of the event.
+   *
+   * @return the location of the event.
+   */
   public String getLocation() {return location; }
+
+  /**
+   * Sets the location of the event.
+   *
+   * @param location The location of the event.
+   */
   public void setLocation(String location) {this.location = location; }
 
+  /**
+   * Gets the venue layout of the event.
+   *
+   * @return the venue layout of the event.
+   */
   public String getVenueLayout() {return venueLayout; }
+
+  /**
+   * Sets the venue layout of the event.
+   *
+   * @param venueLayout The venue layout of the event.
+   */
   public void setVenueLayout(String venueLayout) {this.venueLayout = venueLayout; }
 
 }
