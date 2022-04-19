@@ -5,7 +5,6 @@ import com.libby.letsbookit.daos.MarketService;
 import com.libby.letsbookit.model.Frequencies;
 import com.libby.letsbookit.model.Market;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
