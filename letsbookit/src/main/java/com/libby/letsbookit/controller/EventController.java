@@ -1,5 +1,5 @@
 package com.libby.letsbookit.controller;
 
-public class EventController {
+public class EventController{
 
 }

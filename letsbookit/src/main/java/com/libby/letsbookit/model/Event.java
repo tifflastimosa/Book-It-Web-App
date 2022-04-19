@@ -14,7 +14,7 @@ A class that represents an event that is scheduled to occur at a market.
 
 @Entity
 @Table(name = "events")
-public abstract class Event {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
