@@ -8,14 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
+
 
 /**
  * Super class that represents a user who will either be a market staff or a vendor, both of
  * which are subtype.
  */
-@Entity(name = "users")
+@Entity(name = "joined_base_user")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
@@ -42,9 +41,18 @@ public abstract class User {
   @Column(name = "date_of_birth")
   private LocalDateTime dateOfBirth;
 
-  public User(Integer id, String username, String password, String firstName,
+  /**
+   * Constructor for user.
+   *
+   * @param username the username of the user creating a new user account.
+   * @param password the password of the user.
+   * @param firstName the first name of the user.
+   * @param lastName the last name of the user.
+   * @param email the email of the user.
+   * @param dateOfBirth the date of birth of the user.
+   */
+  public User(String username, String password, String firstName,
       String lastName, String email, LocalDateTime dateOfBirth) {
-    this.id = id;
     this.username = username;
     this.password = password;
     this.firstName = firstName;
@@ -53,55 +61,133 @@ public abstract class User {
     this.dateOfBirth = dateOfBirth;
   }
 
+  /**
+   * Constructor with no parameters for User.
+   */
   public User() {
-
   }
 
+  /**
+   * Gets the id of the user.
+   *
+   * @return The id of the user.
+   */
   public Integer getId() {
-    return id;
+    return this.id;
   }
 
+  /**
+   * Sets the id of the user.
+   *
+   * @param id The id of the user.
+   */
   public void setId(Integer id) {
     this.id = id;
   }
 
+  /**
+   * Gets the first name of the user.
+   *
+   * @return The first name of the user.
+   */
   public String getFirstName() {
-    return firstName;
+    return this.firstName;
   }
 
+  /**
+   * Sets the first name of the user.
+   *
+   * @param firstName The first name of the user.
+   */
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
+  /**
+   * The last name of the user.
+   *
+   * @return The last name of the user.
+   */
   public String getLastName() {
-    return lastName;
+    return this.lastName;
   }
 
+  /**
+   * Sets the last name of the user.
+   *
+   * @param lastName The last name of the user.
+   */
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
+  /**
+   * Gets the username of the user.
+   *
+   * @return The username of the user.
+   */
   public String getUsername() {
-    return username;
+    return this.username;
   }
 
   public void setUsername(String username) {
     this.username = username;
   }
 
+  /**
+   * Gets the password of the user.
+   *
+   * @return The password of the user.
+   */
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
+  /**
+   * Sets the password of the user.
+   *
+   * @param password The password of the user.
+   */
   public void setPassword(String password) {
     this.password = password;
   }
 
+  /**
+   * Gets the date of birth of the user.
+   *
+   * @return The date of birth of the user.
+   */
   public LocalDateTime getDateOfBirth() {
-    return dateOfBirth;
+    return this.dateOfBirth;
   }
 
+  /**
+   * Sets the date of birth of the user.
+   *
+   * @param dateOfBirth the date of birth of the user.
+   */
   public void setDateOfBirth(LocalDateTime dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
+
+  /**
+   * Gets the email of the user.
+   *
+   * @return The email of the user.
+   */
+  public String getEmail() {
+    return this.email;
+  }
+
+  /**
+   * Sets the email of the user.
+   *
+   * @param email The email of the user.
+   */
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
 }
+
+
