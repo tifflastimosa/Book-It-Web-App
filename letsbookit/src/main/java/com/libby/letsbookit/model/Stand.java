@@ -38,11 +38,11 @@ public class Stand {
   /**
    * Constructor for stand.
    *
-   * @param eventId the stand belongs to.
-   * @param tableName that helps identify the stand.
-   * @param tableNotes that describe the stand.
-   * @param booked status of the stand.
-   * @param price it costs to rent the stand.
+   * @param eventId the id of the event the stand belongs to.
+   * @param tableName the table name that helps identify the stand.
+   * @param tableNotes the table notes that describe the stand.
+   * @param booked the booked status of the stand.
+   * @param price the price it costs to rent the stand.
    */
   public Stand(Integer eventId, String tableName, String tableNotes,
       Boolean booked, Float price) {
@@ -91,7 +91,7 @@ public class Stand {
    *
    * @param eventId The id of the associated event.
    */
-  public void setEvent(Integer eventId) {
+  public void setEventId(Integer eventId) {
     this.eventId = eventId;
   }
 
