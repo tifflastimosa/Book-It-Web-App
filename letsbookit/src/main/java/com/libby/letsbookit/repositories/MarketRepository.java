@@ -1,13 +1,13 @@
 package com.libby.letsbookit.repositories;
 
-import com.libby.letsbookit.model.Stand;
+import com.libby.letsbookit.model.Market;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository for class Stand Repository.
+ * Repository for class Market Repository.
  */
 @Repository
-public interface StandRepository extends CrudRepository<Stand, Integer> {
+public interface MarketRepository extends CrudRepository<Market, Integer> {
 
 }
