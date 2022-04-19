@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -20,8 +22,14 @@ public class Stand {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  private Integer eventId;
-  private Integer vendorId;
+
+  @ManyToOne
+  @JoinColumn(name="event_Id")
+  private Event event;
+
+  @ManyToOne
+  @JoinColumn(name="vendor_Id")
+  private Vendor vendor;
 
   @Column(name = "table_name")
   private String tableName;
@@ -32,18 +40,29 @@ public class Stand {
   @Column(name = "price")
   private Float price;
 
-  public Stand(Integer id, Integer eventId, Integer vendorId, String tableName, String tableNotes,
+  /**
+   * Constructor for stand.
+   *
+   * @param event the stand belongs to.
+   * @param vendor that has booked the stand.
+   * @param tableName that helps identify the stand.
+   * @param tableNotes that describe the stand.
+   * @param booked status of the stand.
+   * @param price it costs to rent the stand.
+   */
+  public Stand(Event event, Vendor vendor, String tableName, String tableNotes,
       Boolean booked, Float price) {
-    this.id = id;
-    this.eventId = eventId;
-    this.vendorId = vendorId;
+    this.event = event;
+    this.vendor = vendor;
     this.tableName = tableName;
     this.tableNotes = tableNotes;
     this.booked = booked;
     this.price = price;
   }
 
-  // Can this be removed or does it serve a purpose?
+  /**
+   * Constructor with no parameters for Stand.
+   */
   public Stand() {
   }
 
@@ -55,12 +74,12 @@ public class Stand {
     this.id = id;
   }
 
-  public Integer getEventId() {
-    return eventId;
+  public Event getEvent() {
+    return event;
   }
 
-  public void setEventId(Integer eventId) {
-    this.eventId = eventId;
+  public void setEvent(Event event) {
+    this.event = event;
   }
 
   public String getTableName() {
@@ -95,12 +114,11 @@ public class Stand {
     this.price = price;
   }
 
-
-  public Integer getVendorId() {
-    return vendorId;
+  public Vendor getVendor() {
+    return vendor;
   }
 
-  public void setVendorId(Integer vendorId) {
-    this.vendorId = vendorId;
+  public void setVendor(Vendor vendor) {
+    this.vendor = vendor;
   }
 }
