@@ -1,10 +1,19 @@
 package com.libby.letsbookit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.libby.letsbookit.model.User.MarketStaff;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,18 +27,26 @@ public class Market {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
+
   @Column(name = "market_name")
   private String name;
+
   @Column(name = "description")
   private String description;
+
   @Column(name = "frequency")
+  @Enumerated(EnumType.STRING)
   private Frequencies frequency;
+
   @Column(name = "contact_number")
   private Integer contactNumber;
+
   @Column(name = "contact_email")
   private String contactEmail;
+
   @Column(name = "website")
   private String website;
+
   @Column(name = "social_media")
   private String socialMedia;
 
@@ -205,4 +222,13 @@ public class Market {
   public void setSocialMedia(String socialMedia) {
     this.socialMedia = socialMedia;
   }
+
+//  public List<Event> getEvents() {
+//    return events;
+//  }
+//
+//  public void setEvents(List<Event> events) {
+//    this.events = events;
+//  }
+
 }

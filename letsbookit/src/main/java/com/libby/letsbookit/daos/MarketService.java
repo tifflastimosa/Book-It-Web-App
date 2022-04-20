@@ -2,11 +2,16 @@ package com.libby.letsbookit.daos;
 
 import com.libby.letsbookit.model.Frequencies;
 import com.libby.letsbookit.model.Market;
+import com.libby.letsbookit.model.User.MarketStaff;
 import com.libby.letsbookit.repositories.MarketRepository;
+import com.libby.letsbookit.repositories.userrepository.MarketStaffRepository;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 // QUESTION: Is this description accurate?
 /**
@@ -18,6 +23,9 @@ public class MarketService {
   // connects to the repository
   @Autowired
   private MarketRepository marketRepository;
+
+  @Autowired
+  private MarketStaffRepository marketStaffRepository;
 
   /**
    *Provides the business logic to create a market object and then add it as a record to the
@@ -102,5 +110,6 @@ public class MarketService {
   public List<Market> findAllMarkets() {
     return (List<Market>) this.marketRepository.findAll();
   }
+
 
 }

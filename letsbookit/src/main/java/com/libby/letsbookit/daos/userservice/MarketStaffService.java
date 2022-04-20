@@ -1,10 +1,13 @@
 package com.libby.letsbookit.daos.userservice;
 
+import com.libby.letsbookit.model.Market;
 import com.libby.letsbookit.model.User.MarketStaff;
 import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.model.User.User;
+import com.libby.letsbookit.repositories.MarketRepository;
 import com.libby.letsbookit.repositories.userrepository.UserBaseRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,9 @@ public class MarketStaffService extends UserService {
   // connects to the repository
   @Autowired
   private UserBaseRepository marketStaffRepository;
+
+  @Autowired
+  private MarketRepository marketRepository;
 
   /**
    * Provides the business logic to create a user object and then add it as a record to the
@@ -33,12 +39,40 @@ public class MarketStaffService extends UserService {
    */
   @Override
   public Integer createUser(String username, String password, String firstName, String lastName,
-      String email, String dateOfBirth, Roles role) {
+      String email, String dateOfBirth, Roles role, Integer marketId) throws Exception {
+
     LocalDateTime objectDateOfBirth = super.helperLocalDateTime(dateOfBirth);
-    User marketStaff = new MarketStaff(username, password, firstName, lastName, email, objectDateOfBirth, role);
-    marketStaffRepository.save(marketStaff);
+
+    MarketStaff marketStaff = new MarketStaff(username, password, firstName, lastName, email, objectDateOfBirth, role);
+
+    MarketStaff marketStaffRep =
+        (MarketStaff) this.marketRepository
+            .findById(marketId)
+            .map(market -> {marketStaff.setMarket(market);
+              return this.marketStaffRepository.save(marketStaff);})
+            .orElseThrow(() -> new Exception("Not found"));
+//    this.marketStaffRepository.save(marketStaff);
+//    System.out.println("1");
+//    Optional<Market> marketOptional = this.marketRepository.findById(marketStaff.getMarket().getId());
+//    System.out.println("2");
+//    Market market = marketOptional.get();
+//    if (null == market) {
+//      market = new Market();
+//    }
+//
+//    market.setName(marketStaff.getMarket().getName());
+//    marketStaff.setMarket(market);
+
     return marketStaff.getId();
   }
+
+//  public MarketStaff addMarketStaff(MarketStaff staff) {
+//    Market market = (Market) marketStaffRepository.findById(staff.getMarket().getId()).orElse(null);
+//    if (market == null) {
+//      market = new Market();
+//    }
+//    market.setName(staff.getMarket());
+//  }
 
   /**
    * Updates the user that is a market staff.

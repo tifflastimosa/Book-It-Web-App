@@ -1,9 +1,16 @@
 package com.libby.letsbookit.model.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.libby.letsbookit.model.Market;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 
@@ -13,6 +20,11 @@ public class MarketStaff extends User{  // maps the properties from parent class
 
   @Enumerated(EnumType.STRING)
   private Roles role;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "market_id")
+  @JsonIgnore
+  private Market market;
 
   /**
    * Constructor for MarketStaff.
@@ -56,4 +68,19 @@ public class MarketStaff extends User{  // maps the properties from parent class
     this.role = role;
   }
 
+  public Market getMarket() {
+    return market;
+  }
+
+  public void setMarket(Market market) {
+    this.market = market;
+  }
+
+  @Override
+  public String toString() {
+    return "MarketStaff{" +
+        "role=" + role +
+        ", market=" + market +
+        '}';
+  }
 }

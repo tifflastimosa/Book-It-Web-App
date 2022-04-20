@@ -44,8 +44,9 @@ public class UserController {
    * @param role the role of the user.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-  @PostMapping(value = "/create")
-  public ResponseEntity<Integer> createUser(@RequestParam(value = "username") String username,
+  @PostMapping(value = "/create/{marketId}")
+  public ResponseEntity<Integer> createUser(@PathVariable(value = "marketId") Integer marketId,
+                                            @RequestParam(value = "username") String username,
                                             @RequestParam(value = "password") String password,
                                             @RequestParam(value = "firstName") String firstName,
                                             @RequestParam(value = "lastName") String lastName,
@@ -59,7 +60,8 @@ public class UserController {
                                                               lastName,
                                                               email,
                                                               dateOfBirth,
-                                                              role), HttpStatus.OK);
+                                                              role,
+                                                              marketId), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
