@@ -1,17 +1,17 @@
 package com.libby.letsbookit.controller;
 
-import com.libby.letsbookit.model.Event;
 import com.libby.letsbookit.daos.EventService;
+import com.libby.letsbookit.model.Event;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -86,6 +86,7 @@ public class EventController{
     }
   }
 
+
   // PUT (update) Request
 
   /**
@@ -98,14 +99,13 @@ public class EventController{
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-
   @PutMapping(value = "/update/{id}")
   public ResponseEntity<Integer> updateEvent(@PathVariable("id") Integer id,
-                                            @RequestParam(value = "name") String name,
-                                            @RequestParam(value = "start") String start,
-                                            @RequestParam(value = "end") String end,
-                                            @RequestParam(value = "location") String location,
-                                            @RequestParam(value = "venueLayout") String venueLayout) {
+                                             @RequestParam(value = "name") String name,
+                                             @RequestParam(value = "start") String start,
+                                             @RequestParam(value = "end") String end,
+                                             @RequestParam(value = "location") String location,
+                                             @RequestParam(value = "venueLayout") String venueLayout) {
 
     try {
       return new ResponseEntity<>(this.eventService.updateEvent(id, name, start, end, location,
@@ -126,7 +126,7 @@ public class EventController{
   @DeleteMapping(value = "/delete/{id}")
   public ResponseEntity<HttpStatus> deletePlace(@PathVariable("id") Integer id) {
     try {
-      this.eventService.deleteUser(id);
+      this.eventService.deleteEvent(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
