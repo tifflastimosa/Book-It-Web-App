@@ -1,6 +1,7 @@
 package com.libby.letsbookit.controller;
 
 import com.libby.letsbookit.daos.userservice.IUserService;
+import com.libby.letsbookit.daos.userservice.MarketStaffService;
 import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.model.User.User;
 import java.util.List;
@@ -28,7 +29,9 @@ public class UserController {
   // connect with the service layer
   @Autowired
   private IUserService userService;
-
+  
+  @Autowired
+  private MarketStaffService marketStaffService;
   // POST Request
 
   /**
@@ -44,8 +47,9 @@ public class UserController {
    * @param role the role of the user.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-  @PostMapping(value = "/create/{marketId}")
-  public ResponseEntity<Integer> createUser(@PathVariable(value = "marketId") Integer marketId,
+  @PostMapping(value = "/associate/{marketId}")
+  public ResponseEntity<Integer> associateMarket(
+                                            @PathVariable(value = "marketId", required = false) Integer marketId,
                                             @RequestParam(value = "username") String username,
                                             @RequestParam(value = "password") String password,
                                             @RequestParam(value = "firstName") String firstName,
@@ -54,7 +58,7 @@ public class UserController {
                                             @RequestParam(value = "dateOfBirth") String dateOfBirth,
                                             @RequestParam(value = "role") Roles role) {
     try {
-      return new ResponseEntity<>(this.userService.createUser(username,
+      return new ResponseEntity<>(this.userService.associateUser(username,
                                                               password,
                                                               firstName,
                                                               lastName,
@@ -62,6 +66,28 @@ public class UserController {
                                                               dateOfBirth,
                                                               role,
                                                               marketId), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @PostMapping(value = "/create")
+  public ResponseEntity<Integer> createUserNoMarket(
+                                                    @RequestParam(value = "username") String username,
+                                                    @RequestParam(value = "password") String password,
+                                                    @RequestParam(value = "firstName") String firstName,
+                                                    @RequestParam(value = "lastName") String lastName,
+                                                    @RequestParam(value = "email") String email,
+                                                    @RequestParam(value = "dateOfBirth") String dateOfBirth,
+                                                    @RequestParam(value = "role") Roles role) {
+    try {
+      return new ResponseEntity<>(this.marketStaffService.createUserNoMarket(username,
+                                                              password,
+                                                              firstName,
+                                                              lastName,
+                                                              email,
+                                                              dateOfBirth,
+                                                              role), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

@@ -21,7 +21,7 @@ public class MarketStaff extends User{  // maps the properties from parent class
   @Enumerated(EnumType.STRING)
   private Roles role;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(optional = true, fetch = FetchType.LAZY)
   @JoinColumn(name = "market_id")
   @JsonIgnore
   private Market market;
