@@ -101,7 +101,7 @@ public class UserController {
    * @return Returns HTTP status, if the request is good or bad, and also returns a list of all
    * users in the database.
    */
-  @GetMapping(value = "/all")
+  @GetMapping
   public ResponseEntity<List<User>> getAllUsers() {
     List<User> users = this.userService.getAll();
     if (!users.isEmpty()) {

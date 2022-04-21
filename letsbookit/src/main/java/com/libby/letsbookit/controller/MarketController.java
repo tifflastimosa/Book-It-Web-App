@@ -74,7 +74,7 @@ public class MarketController {
    * @return Returns HTTP status, if the request is good or bad, and also returns a list of all
    * markets in the database.
    */
-  @GetMapping(value = "/all")
+  @GetMapping
   public ResponseEntity<List<Market>> findAllMarkets() {
     List<Market> markets = this.marketService.findAllMarkets();
     if (!markets.isEmpty()) {

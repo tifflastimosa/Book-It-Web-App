@@ -53,7 +53,7 @@ public class EventController{
 //      }
 //    }
 
-    @PostMapping(value = "create/{marketId}")
+    @PostMapping(value = "/create/{marketId}")
     public ResponseEntity<Integer> associateMarketToEvent(
                                                           @PathVariable(value = "marketId", required = false) Integer marketId,
                                                           @RequestParam(value = "name") String name,
@@ -80,7 +80,7 @@ public class EventController{
    * @return Returns HTTP status, if the request is good or bad, and also returns a list of all
    * events in the database.
    */
-  @GetMapping(value = "/all")
+  @GetMapping
   public ResponseEntity<List<Event>> getAllEvents() {
     List<Event> events = this.eventService.getAll();
     if (!events.isEmpty()) {
