@@ -4,10 +4,7 @@ import axios from "axios";
 const USERS_API_BASE_URL = "http://localhost:8080/users"
 
 class UserService {
-
-    // POST
-
-
+    
     // GET
 
     // get all users
@@ -20,8 +17,15 @@ class UserService {
         return axios.get(USERS_API_BASE_URL + '/' + userID)
     }
 
+    // POST
+    createUser(user) {
+        return axios.post(USERS_API_BASE_URL + '/create' + user)
+    }
     // PUT
 
+    updateUser(user, userId){
+        return axios.put(USERS_API_BASE_URL + '/update/' + userId);
+    }
 
     // DELETE
 

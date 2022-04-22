@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UsersService from "../../services/UsersService";
+import { Link } from "react-router-dom";
 
 // building the component to call into App so that it will display
 class ListUsers extends Component {
@@ -8,8 +9,10 @@ class ListUsers extends Component {
         this.state =  {
             users: []
         }
-
+        // bind event in constructor
         this.deleteUserById = this.deleteUserById.bind(this);
+        this.addUser = this.addUser.bind(this);
+
 
     }
 
@@ -21,18 +24,33 @@ class ListUsers extends Component {
         })
     }
 
+    addUser() {
+        this.props.history.push('/add-user');
+    }
+
+    viewUser(id) {
+        this.props.history.push(`/view-employee/${id}`);
+    }
+
     deleteUserById(id) {
         UsersService.deleteUser(id).then( res => {
             this.setState({ users: this.state.users.filter(user => user.id !== id)});
         })
     }
 
+
+
+
     render() {
         return (
             <div>
                 <h2 className="text-center">Users List</h2>
                 <div className = "row">
-                <button className="btn btn-primary" onClick={this.addUser}> Add User Placeholder </button>
+                    <Link to="/add-user">
+                    <button className="btn btn-primary" onClick={this.addUser}> Add User</button>
+                    </Link>
+
+
                     <table className = "table table-striped table-bordered">
                         <thead>
                             <tr>

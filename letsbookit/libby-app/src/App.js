@@ -9,6 +9,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import "bootswatch/dist/minty/bootstrap.min.css"
 import ListEvents from './components/Events/ListEventsComponent';
 import ListMarkets from './components/Market/ListMarketsComponent';
+import CreateUser from './components/Users/CreateUserComponent';
 
 // root component to render inside reactDOM
 function App() {
@@ -24,15 +25,18 @@ function App() {
               <Nav.Link as={Link} to={'/users'} className="nav-link"> Users </Nav.Link>
               <Nav.Link as={Link} to={'/markets'} className="nav-link"> Markets </Nav.Link>
               <Nav.Link as={Link} to={'/events'} className="nav-link"> Events </Nav.Link>
+
             </Nav>
     
         </Container>
+        
       </Navbar>
       <Container>
       <br></br>
       <Routes>
         <Route exact path='/'> </Route>
         <Route exact path='/users' element={<ListUsers />}></Route>
+        <Route exact path='/add-user' element={<CreateUser />}></Route>
         <Route exact path='/markets' element={<ListMarkets />}></Route>
         <Route exact path='/events' element={<ListEvents />}></Route>
       </Routes>
