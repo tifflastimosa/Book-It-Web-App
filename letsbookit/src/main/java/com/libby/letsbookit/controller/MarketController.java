@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * MarketController class provides CRUD requests for the client to interact with the database.
  */
-// DO I NEED @CROSSORIGIN?
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/markets")
 public class MarketController {
@@ -73,7 +74,7 @@ public class MarketController {
    * @return Returns HTTP status, if the request is good or bad, and also returns a list of all
    * markets in the database.
    */
-  @GetMapping(value = "/all")
+  @GetMapping
   public ResponseEntity<List<Market>> findAllMarkets() {
     List<Market> markets = this.marketService.findAllMarkets();
     if (!markets.isEmpty()) {
@@ -154,4 +155,5 @@ public class MarketController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
+
 }

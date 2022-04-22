@@ -1,23 +1,25 @@
 package com.libby.letsbookit.controller;
 
-import com.libby.letsbookit.model.Event;
 import com.libby.letsbookit.daos.EventService;
+import com.libby.letsbookit.model.Event;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * EventController class provides CRUD requests for the client and updates the view as data changes.
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/events")
 public class EventController{
@@ -26,7 +28,7 @@ public class EventController{
   @Autowired
   private EventService eventService;
 
-  // CREATE request
+  // POST requests
   /**
    * Allows the client to request to create an Event that will be added to the database.
    *
@@ -37,20 +39,39 @@ public class EventController{
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-  @PostMapping(value = "/create")
-  public ResponseEntity<Integer> createEvent(@RequestParam(value = "name") String name,
-                                             @RequestParam(value = "start") String start,
-                                             @RequestParam(value = "end") String end,
-                                             @RequestParam(value = "location") String location,
-                                             @RequestParam(value = "venueLayout") String venueLayout) {
-    try {
-      return new ResponseEntity<>(
-          this.eventService.createEvent(name, start, end, location, venueLayout), HttpStatus.OK);
+//  @PostMapping(value = "/create")
+//  public ResponseEntity<Integer> createEvent(@RequestParam(value = "name") String name,
+//                                             @RequestParam(value = "start") String start,
+//                                             @RequestParam(value = "end") String end,
+//                                             @RequestParam(value = "location") String location,
+//                                             @RequestParam(value = "venueLayout") String venueLayout) {
+//    try {
+//      return new ResponseEntity<>(
+//          this.eventService.createEventNoMarket(name, start, end, location, venueLayout), HttpStatus.OK);
+//      } catch (Exception e) {
+//      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//      }
+//    }
+
+    @PostMapping(value = "/create/{marketId}")
+    public ResponseEntity<Integer> associateMarketToEvent(
+                                                          @PathVariable(value = "marketId", required = false) Integer marketId,
+                                                          @RequestParam(value = "name") String name,
+                                                          @RequestParam(value = "start") String start,
+                                                          @RequestParam(value = "end") String end,
+                                                          @RequestParam(value = "location") String location,
+                                                          @RequestParam(value = "venueLayout") String venueLayout) {
+      try {
+        return new ResponseEntity<>(this.eventService.associateEvent(marketId,
+                                                                     name,
+                                                                     start,
+                                                                     end,
+                                                                     location,
+                                                                     venueLayout), HttpStatus.OK);
       } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
     }
-
   // GET requests
 
   /**
@@ -59,7 +80,7 @@ public class EventController{
    * @return Returns HTTP status, if the request is good or bad, and also returns a list of all
    * events in the database.
    */
-  @GetMapping(value = "/all")
+  @GetMapping
   public ResponseEntity<List<Event>> getAllEvents() {
     List<Event> events = this.eventService.getAll();
     if (!events.isEmpty()) {
@@ -86,6 +107,7 @@ public class EventController{
     }
   }
 
+
   // PUT (update) Request
 
   /**
@@ -98,19 +120,21 @@ public class EventController{
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-
   @PutMapping(value = "/update/{id}")
-  public ResponseEntity<Integer> updateEvent(@PathVariable("id") Integer id,
-                                            @RequestParam(value = "name") String name,
-                                            @RequestParam(value = "start") String start,
-                                            @RequestParam(value = "end") String end,
-                                            @RequestParam(value = "location") String location,
-                                            @RequestParam(value = "venueLayout") String venueLayout) {
+  public ResponseEntity<Integer> updateEvent(@PathVariable(value = "id") Integer id,
+                                             @RequestParam(value = "name") String name,
+                                             @RequestParam(value = "start") String start,
+                                             @RequestParam(value = "end") String end,
+                                             @RequestParam(value = "location") String location,
+                                             @RequestParam(value = "venueLayout") String venueLayout) {
 
+    System.out.println("A");
     try {
+      System.out.println("B");
       return new ResponseEntity<>(this.eventService.updateEvent(id, name, start, end, location,
           venueLayout), HttpStatus.OK);
     } catch (Exception e) {
+      System.out.println("C");
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
@@ -124,15 +148,13 @@ public class EventController{
    * @return Returns HTTP status, if the request is good or bad.
    */
   @DeleteMapping(value = "/delete/{id}")
-  public ResponseEntity<HttpStatus> deletePlace(@PathVariable("id") Integer id) {
+  public ResponseEntity<HttpStatus> deleteEvent(@PathVariable("id") Integer id) {
     try {
-      this.eventService.deleteUser(id);
+      this.eventService.deleteEvent(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
 
-  }
-
-
+}

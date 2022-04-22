@@ -1,11 +1,15 @@
 package com.libby.letsbookit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /*
@@ -20,20 +24,27 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // TODO: implement market for next milestone
-    @Column(name = "market_id")
-    private Integer marketId = 0000;
-
     @Column(name = "event_name")
     private String name;
+
     @Column(name = "start")
-    private String start;
+    private LocalDateTime start;
+
     @Column(name = "end")
-    private String end;
+    private LocalDateTime end;
+
     @Column(name = "location")
     private String location;
+
     @Column(name = "venue_Layout")
     private String venueLayout;
+
+    // TODO: implement market for next milestone
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "market_id")
+    @JsonIgnore
+    private Market market;
+
 
   /**
    * Constructor for Event.
@@ -45,7 +56,7 @@ public class Event {
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-    public Event(String name, String start, String end,
+    public Event(String name, LocalDateTime start, LocalDateTime end,
         String location, String venueLayout) {
       this.name = name;
       this.start = start;
@@ -54,9 +65,8 @@ public class Event {
       this.venueLayout = venueLayout;
 
     }
-  /**
-   * Constructor with no parameters for Event.
-   */
+
+
   public Event() {
 
   }
@@ -80,15 +90,15 @@ public class Event {
    *
    * @return the marketId of the event.
    */
-  public Integer getMarketId(){ return marketId; }
+  public Market getMarket(){ return market; }
 
   //Not sure we want this since it's the FK for Market.
   /**
    * Sets the marketId of the event.
    *
-   * @param marketId The id of the event.
+   * @param market The id of the event.
    */
-  public void setMarketId(Integer marketId){ this.marketId = marketId; }
+  public void setMarket(Market market){ this.market = market; }
 
   /**
    * Gets the name of the event.
@@ -109,28 +119,28 @@ public class Event {
    *
    * @return the start time of the event.
    */
-  public String getStart(){ return start; }
+  public LocalDateTime getStart(){ return start; }
 
   /**
    * Sets the start time of the event.
    *
    * @param start The start time of the event.
    */
-  public void setStart(String start) {this.start = start; }
+  public void setStart(LocalDateTime start) {this.start = start; }
 
   /**
    * Gets the end time of the event.
    *
    * @return the end time of the event.
    */
-  public String getEnd() {return end; }
+  public LocalDateTime getEnd() {return end; }
 
   /**
    * Sets the end time of the event.
    *
    * @param end The end time of the event.
    */
-  public void setEnd(String end) {this.end = end; }
+  public void setEnd(LocalDateTime end) {this.end = end; }
 
   /**
    * Gets the location of the event.
@@ -159,5 +169,7 @@ public class Event {
    * @param venueLayout The venue layout of the event.
    */
   public void setVenueLayout(String venueLayout) {this.venueLayout = venueLayout; }
+
+
 
 }

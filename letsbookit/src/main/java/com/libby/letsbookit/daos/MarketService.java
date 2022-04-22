@@ -19,6 +19,7 @@ public class MarketService {
   @Autowired
   private MarketRepository marketRepository;
 
+
   /**
    *Provides the business logic to create a market object and then add it as a record to the
    * database.
@@ -57,7 +58,7 @@ public class MarketService {
   public Integer updateMarket(Integer id, String name, String description, Frequencies frequency,
       Integer contactNumber, String contactEmail, String website,
       String socialMedia) {
-    Market market = (Market) this.findMarketById(id);
+    Market market = this.findMarketById(id);
     market.setName(name);
     market.setDescription(description);
     market.setFrequency(frequency);
@@ -102,5 +103,6 @@ public class MarketService {
   public List<Market> findAllMarkets() {
     return (List<Market>) this.marketRepository.findAll();
   }
+
 
 }

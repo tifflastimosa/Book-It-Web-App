@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+th {
+  background-color: #4287f5;
+  color: #39C795;
+}
+
+th,
+td {
+  width: 150px;
+  text-align: center;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+h2 {
+  color: #39C795;
+}
