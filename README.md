@@ -1,58 +1,41 @@
-# CS_5200 Spring 2022 Final Project
+# Lets Book It Web Application
 
-## 1. Name of the project
+A web application that allows an end user to manage events and/or reserve a
+spot at the event.
 
-**LetsBookIt**
+## Features Implemented on the Back End - Data Model:
+* Create, find, update, or delete an end user account.
+* Create, find, update, or delete a market, which also represents a conference or convention.
+* Create, find, update, or delete an event, which represents the date of the market.
 
-## 2. Name of the team and names of the team members
+## Features Implemented on the Front End - User:
+* Find all(List Screen) or delete(Edit Screen) an end user account.
+* Find all(List Screen) or delete(Edit Screen) a market, which also represents a conference or convention.
+* Find all(List Screen) or delete(Edit Screen) an event, which represents the date of the market.
 
-Team Name: project-SP22-kabilaw-tlastimosa-moranandrew
+## Getting Started
 
-Team Members: Kabila Williams, Tiffany Lastimosa, Andrew Moran
+* This project was built in IntelliJ using Spring Boot.
 
-## 3. Brief description of the project
+* Download the letsbookit package onto your local machine.
 
-LetsBookIt is a tool that assists with providing a shared platform for different types of markets, fairs, conventions, or other types of event-based organizations to give vendors the usability to book their preferred stand spaces at events.
+* When getting started, the back end and part of the front end will be running on port 8080, while the other part of the front end is running on port 3000.  Please note that you may have to utilize the back button in your browser to get back to the webpage landing on part 3000.
 
-## 4. Description of the two user data models
+### Building Java Program
 
-The user data model **Market Staff** is a **User** that has a **Role** associated with the management of a **Market**.
+Please see the pom.xml file for dependencies. </br>
 
-The user data model **Vendor Staff** is a **User** that has a **Role** associated with the management of a **Vendor**.
+To build the Java program, open the letsbookit package in IntelliJ, or preferred IDE.  Navigate to the pom.xml and load the dependencies and build the project. </br>
 
-## 5. Description of the three domain object data models
+You should be able to make CRUD requests in Postman. </br>
 
-The domain object data model **Market** represents a market, fair, convention, or other organization (e.g. Emerald City Comic Convention) that puts on **Events** (e.g. Friday, Saturday, Sunday, etc.) at a specified frequency for **Vendors** to book **Stands**.
+### Front End
 
-The domain object data model **Event** is a scheduled occurrence for a **Market** and consists of **Stands** for **Vendors** to book.
+To setup the front end, in your terminal, change your directory to libby-app.  Once in said package, type the below in:
 
-The domain object data model **Stand** represents a table or space at an **Event** for a **Vendor** to book for use.
+```
+cd app
+npm install
+```
 
-The domain object data model **Vendor** represents an organization that provides or sells a service or good at a **Stand** that they have booked at an **Event**.
-
-## 6. Description of the user to domain object relationship
-
-**Market Staff** manage a **Market** and its associated **Events** and **Stands**.
-
-**Vendor Staff** manage a **Vendor** and are responsible for booking the **Vendor** for **Stands** at **Events**.
-
-## 7. Description of the domain object to domain object relationship
-
-A **Market** holds anywhere from a single to multiple **Events**.
-
-An **Event** consists of multiple **Stands**.
-
-A **Stand** is not booked until a **Vendor** books it.
-
-A **Vendor** can book **Stands** at multiple **Events**.
-
-## 8. Description of the portable enumeration(s)
-
-The **Role** enumeration consists of different roles that **Market Staff** can have in a **Market** and that **Vendor Staff** can have in a **Vendor**. These roles are **Manager**, **Organizer**, or **Associate**.
-
-The **Frequency** enumeration consists of different frequency rates at which a **Market** has **Events**. These frequencies are **One-Time**, **Weekly**, **Monthly**, **Quarterly**, or **Annually**.
-
-## 9. Description of the user interface requirements
-
-N/A at current development stage.
-
+npm install will install and load the dependencies to run the front end.  From there, once you have the QuantifiedSelfApplciation running, in your terminal, input ```npm start```
