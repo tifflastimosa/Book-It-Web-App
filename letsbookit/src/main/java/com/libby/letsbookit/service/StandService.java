@@ -1,4 +1,4 @@
-package com.libby.letsbookit.daos;
+package com.libby.letsbookit.service;
 
 import com.libby.letsbookit.model.Stand;
 import com.libby.letsbookit.repositories.StandRepository;

@@ -1,7 +1,7 @@
 package com.libby.letsbookit.controller;
 
 
-import com.libby.letsbookit.daos.MarketService;
+import com.libby.letsbookit.service.MarketService;
 import com.libby.letsbookit.model.Frequencies;
 import com.libby.letsbookit.model.Market;
 import java.util.List;

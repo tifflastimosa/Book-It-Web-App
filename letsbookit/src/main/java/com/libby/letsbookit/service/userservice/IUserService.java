@@ -1,4 +1,4 @@
-package com.libby.letsbookit.daos.userservice;
+package com.libby.letsbookit.service.userservice;
 
 import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.model.User.User;

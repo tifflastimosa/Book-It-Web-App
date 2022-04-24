@@ -1,6 +1,6 @@
 package com.libby.letsbookit.controller;
 
-import com.libby.letsbookit.daos.EventService;
+import com.libby.letsbookit.service.EventService;
 import com.libby.letsbookit.model.Event;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

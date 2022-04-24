@@ -1,7 +1,6 @@
-package com.libby.letsbookit.daos;
+package com.libby.letsbookit.service;
 
 import com.libby.letsbookit.model.Event;
-import com.libby.letsbookit.model.Market;
 import com.libby.letsbookit.repositories.EventRepository;
 import com.libby.letsbookit.repositories.MarketRepository;
 import java.time.LocalDateTime;
