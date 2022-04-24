@@ -23,7 +23,7 @@ class CreateUser extends Component {
         this.changeDateOfBirth = this.changeDateOfBirth.bind(this); 
         this.changeRole = this.changeRole.bind(this);
         this.saveUser = this.saveUser.bind(this);
-        this.cancel = this.cancel.bind(this);
+        // this.cancel = this.cancel.bind(this);
 
     }
 
@@ -149,7 +149,7 @@ class CreateUser extends Component {
                                             value={this.state.role} onChange={this.changeRole}/>
                                     </div>
                                     <br></br>
-                                    <button class="btn btn-success" onClick={this.saveEmployee}> Save</button>
+                                    <button class="btn btn-success" onClick={this.saveUser}> Save</button>
                                     <button class="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}> Cancel</button>
                                 </form>
                             </div>
