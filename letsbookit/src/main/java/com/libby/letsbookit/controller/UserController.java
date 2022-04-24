@@ -1,7 +1,7 @@
 package com.libby.letsbookit.controller;
 
-import com.libby.letsbookit.daos.userservice.IUserService;
-import com.libby.letsbookit.daos.userservice.MarketStaffService;
+import com.libby.letsbookit.service.userservice.IUserService;
+import com.libby.letsbookit.service.userservice.MarketStaffService;
 import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.model.User.User;
 import java.util.List;

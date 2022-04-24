@@ -1,13 +1,10 @@
-package com.libby.letsbookit.daos.userservice;
+package com.libby.letsbookit.service.userservice;
 
-import com.libby.letsbookit.model.Market;
 import com.libby.letsbookit.model.User.MarketStaff;
 import com.libby.letsbookit.model.User.Roles;
-import com.libby.letsbookit.model.User.User;
 import com.libby.letsbookit.repositories.MarketRepository;
 import com.libby.letsbookit.repositories.userrepository.UserBaseRepository;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
