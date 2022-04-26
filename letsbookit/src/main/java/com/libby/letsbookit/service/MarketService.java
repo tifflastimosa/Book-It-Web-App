@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// QUESTION: Is this description accurate?
 /**
  * MarketService Class provides the business logic for the client to interact with the database.
  */

@@ -5,6 +5,7 @@ import com.libby.letsbookit.model.Stand;
 import com.libby.letsbookit.model.Vendor;
 import com.libby.letsbookit.repositories.EventRepository;
 import com.libby.letsbookit.repositories.StandRepository;
+import com.libby.letsbookit.repositories.VendorRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
