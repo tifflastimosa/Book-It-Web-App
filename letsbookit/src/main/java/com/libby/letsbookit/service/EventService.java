@@ -96,4 +96,9 @@ public class EventService {
     this.eventRepository.deleteById(id);
   }
 
+  public List<Event> getEventByLocation(String location) {
+   return this.eventRepository.findEventByLocation(location);
+
+  }
+
 }

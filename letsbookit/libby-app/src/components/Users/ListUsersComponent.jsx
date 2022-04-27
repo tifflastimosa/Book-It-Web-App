@@ -25,7 +25,7 @@ class ListUsers extends Component {
     }
 
     addUser() {
-        this.props.history.push('/add-user');
+        this.props.history.push('/users/create');
     }
 
     viewUser(id) {
@@ -46,7 +46,7 @@ class ListUsers extends Component {
             <div>
                 <h2 className="text-center">Users List</h2>
                 <div className = "row">
-                    <Link to="/add-user">
+                    <Link to="/users/create">
                     <button className="btn btn-primary" onClick={this.addUser}> Add User</button>
                     </Link>
 

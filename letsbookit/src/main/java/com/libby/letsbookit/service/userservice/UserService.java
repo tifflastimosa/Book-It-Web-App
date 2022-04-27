@@ -49,7 +49,7 @@ public abstract class UserService<T extends User> implements IUserService {
    * @param id the primary key, unique id of the user.
    * @return The user of the assigned id number.
    */
-  private User getUser(Integer id) {
+  protected User getUser(Integer id) {
     Optional<User> userOptional = this.userRepository.findById(id);
     return userOptional.get();
   }

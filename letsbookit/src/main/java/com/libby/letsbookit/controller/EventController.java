@@ -39,19 +39,19 @@ public class EventController{
    * @param venueLayout the layout of the venue where the event will be held.
    * @return Returns HTTP status, if the request is good or bad, and also returns the id.
    */
-//  @PostMapping(value = "/create")
-//  public ResponseEntity<Integer> createEvent(@RequestParam(value = "name") String name,
-//                                             @RequestParam(value = "start") String start,
-//                                             @RequestParam(value = "end") String end,
-//                                             @RequestParam(value = "location") String location,
-//                                             @RequestParam(value = "venueLayout") String venueLayout) {
-//    try {
-//      return new ResponseEntity<>(
-//          this.eventService.createEventNoMarket(name, start, end, location, venueLayout), HttpStatus.OK);
-//      } catch (Exception e) {
-//      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//      }
-//    }
+  @PostMapping(value = "/create")
+  public ResponseEntity<Integer> createEvent(@RequestParam(value = "name") String name,
+                                             @RequestParam(value = "start") String start,
+                                             @RequestParam(value = "end") String end,
+                                             @RequestParam(value = "location") String location,
+                                             @RequestParam(value = "venueLayout") String venueLayout) {
+    try {
+      return new ResponseEntity<>(
+          this.eventService.createEventNoMarket(name, start, end, location, venueLayout), HttpStatus.OK);
+      } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+    }
 
     @PostMapping(value = "/create/{marketId}")
     public ResponseEntity<Integer> associateMarketToEvent(
@@ -152,6 +152,16 @@ public class EventController{
     try {
       this.eventService.deleteEvent(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = "/find/{location}")
+  public ResponseEntity<List<Event>> findEventByLocation(@PathVariable(value = "location") String location) {
+    try {
+      return new ResponseEntity<>(
+          this.eventService.getEventByLocation(location), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

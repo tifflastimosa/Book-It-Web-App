@@ -36,7 +36,7 @@ function App() {
       <Routes>
         <Route exact path='/'> </Route>
         <Route exact path='/users' element={<ListUsers />}></Route>
-        <Route exact path='/add-user' element={<CreateUser />}></Route>
+        <Route exact path='/users/create' element={<CreateUser />}></Route>
         <Route exact path='/markets' element={<ListMarkets />}></Route>
         <Route exact path='/events' element={<ListEvents />}></Route>
       </Routes>

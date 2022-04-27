@@ -1,5 +1,6 @@
 package com.libby.letsbookit.service.userservice;
 
+import com.libby.letsbookit.model.User.MarketStaff;
 import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.model.User.User;
 import java.util.List;
@@ -69,4 +70,5 @@ public interface IUserService {
    */
   void deleteUser(Integer id);
 
+  MarketStaff createUserOther(MarketStaff user);
 }

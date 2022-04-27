@@ -1,9 +1,12 @@
 package com.libby.letsbookit.service.userservice;
 
+import com.libby.letsbookit.model.Frequencies;
+import com.libby.letsbookit.model.Market;
 import com.libby.letsbookit.model.User.MarketStaff;
 import com.libby.letsbookit.model.User.Roles;
 import com.libby.letsbookit.repositories.MarketRepository;
 import com.libby.letsbookit.repositories.userrepository.UserBaseRepository;
+import com.libby.letsbookit.service.MarketService;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class MarketStaffService extends UserService {
 
   @Autowired
   private MarketRepository marketRepository;
+
+  @Autowired
+  private MarketService marketService;
 
   /**
    * Provides the business logic to create a user object and then add it as a record to the
@@ -61,6 +67,11 @@ public class MarketStaffService extends UserService {
     return marketStaff.getId();
   }
 
+  public MarketStaff createUserOther(MarketStaff user) {
+    this.marketStaffRepository.save(user);
+    return user;
+  }
+
   /**
    * Updates the user that is a market staff.
    * @param id the primary key, unique id of the user.
@@ -87,5 +98,31 @@ public class MarketStaffService extends UserService {
     ms.setRole(role);
     this.marketStaffRepository.save(ms);
     return ms.getId();
+  }
+
+  // Market Staff creates a new market
+  public Integer userAddsNewMarket(Integer id, String marketName, String description,
+                                    Frequencies frequency, Integer contactNumber, String contactEmail,
+                                    String website, String socialMedia ) {
+    // TODO: add some logic to allow manny staff to market
+    // need to use find method - find by market name, get the id
+    Market market = new Market(marketName, description, frequency, contactNumber, contactEmail, website, socialMedia);
+    MarketStaff marketStaff = (MarketStaff) super.getUser(id);
+    this.marketRepository.save(market);
+    marketStaff.setMarket(market);
+    this.marketStaffRepository.save(marketStaff);
+    return market.getId();
+  }
+
+  public Integer userAddsExistingMarket(Integer id, Integer marketId) {
+    MarketStaff marketStaff = (MarketStaff) super.getUser(id);
+    Market market = this.marketService.findMarketById(marketId);
+    marketStaff.setMarket(market);
+    this.marketStaffRepository.save(marketStaff);
+    return marketStaff.getId();
+  }
+
+  public MarketStaff saveUser(MarketStaff user) {
+    return (MarketStaff) this.marketStaffRepository.save(user);
   }
 }

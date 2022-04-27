@@ -1,5 +1,7 @@
 package com.libby.letsbookit.model.User;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,21 +26,28 @@ public abstract class User {
   private Integer id;
 
   @Column(name = "username")
+  @JsonProperty
   private String username;
 
   @Column(name = "password")
+  @JsonProperty
   private String password;
 
   @Column(name = "first_name")
+  @JsonProperty
   private String firstName;
 
   @Column(name = "last_name")
+  @JsonProperty
   private String lastName;
 
   @Column(name = "email")
+  @JsonProperty
   private String email;
 
   @Column(name = "date_of_birth")
+  @JsonProperty
+  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime dateOfBirth;
 
   /**
@@ -187,6 +196,7 @@ public abstract class User {
   public void setEmail(String email) {
     this.email = email;
   }
+
 
 }
 

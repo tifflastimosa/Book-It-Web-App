@@ -1,5 +1,11 @@
 package com.libby.letsbookit.controller;
 
+import com.amazonaws.Response;
+import com.libby.letsbookit.model.Frequencies;
+import com.libby.letsbookit.model.Market;
+import com.libby.letsbookit.model.User.MarketStaff;
+import com.libby.letsbookit.service.EventService;
+import com.libby.letsbookit.service.MarketService;
 import com.libby.letsbookit.service.userservice.IUserService;
 import com.libby.letsbookit.service.userservice.MarketStaffService;
 import com.libby.letsbookit.model.User.Roles;
@@ -14,8 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,6 +40,9 @@ public class UserController {
   
   @Autowired
   private MarketStaffService marketStaffService;
+
+  @Autowired
+  private MarketService marketService;
   // POST Request
 
   /**
@@ -72,6 +83,7 @@ public class UserController {
   }
 
   @PostMapping(value = "/create")
+  @ResponseBody
   public ResponseEntity<Integer> createUserNoMarket(
                                                     @RequestParam(value = "username") String username,
                                                     @RequestParam(value = "password") String password,
@@ -93,6 +105,12 @@ public class UserController {
     }
   }
 
+
+  @PostMapping
+  public MarketStaff createUserNoMarket(@RequestBody MarketStaff user) {
+    return this.marketStaffService.saveUser(user);
+  }
+
   // GET Requests
 
   /**
@@ -101,7 +119,7 @@ public class UserController {
    * @return Returns HTTP status, if the request is good or bad, and also returns a list of all
    * users in the database.
    */
-  @GetMapping
+  @GetMapping(value = "/")
   public ResponseEntity<List<User>> getAllUsers() {
     List<User> users = this.userService.getAll();
     if (!users.isEmpty()) {
@@ -175,6 +193,37 @@ public class UserController {
     try {
       this.userService.deleteUser(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+
+  @PutMapping(value = "/{id}/new-event")
+  public ResponseEntity<Integer> userAddsNewMarket(@PathVariable("id") Integer id,
+                                                      @RequestParam(value = "name") String name,
+                                                      @RequestParam(value = "description") String description,
+                                                      @RequestParam(value = "frequency") Frequencies frequency,
+                                                      @RequestParam(value = "contactNumber") Integer contactNumber,
+                                                      @RequestParam(value = "contactEmail") String contactEmail,
+                                                      @RequestParam(value = "website") String website,
+                                                      @RequestParam(value = "socialMedia") String socialMedia) {
+    try {
+
+      return new ResponseEntity<>(
+          this.marketStaffService.userAddsNewMarket(id, name, description, frequency, contactNumber,
+              contactEmail, website, socialMedia), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @PutMapping(value = "/{id}/{market_id}")
+  public ResponseEntity<Integer> userAddsExistingMarket(@PathVariable("id") Integer id, @PathVariable("market_id") Integer marketId) {
+    try {
+
+      return new ResponseEntity<>(
+          this.marketStaffService.userAddsExistingMarket(id, marketId), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

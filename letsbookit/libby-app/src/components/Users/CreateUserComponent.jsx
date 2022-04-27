@@ -23,7 +23,6 @@ class CreateUser extends Component {
         this.changeDateOfBirth = this.changeDateOfBirth.bind(this); 
         this.changeRole = this.changeRole.bind(this);
         this.saveUser = this.saveUser.bind(this);
-        // this.cancel = this.cancel.bind(this);
 
     }
 
@@ -60,15 +59,9 @@ class CreateUser extends Component {
         };
         console.log('user => ' + JSON.stringify(user));
 
-        if(this.state.id === '_add'){
-            UsersService.createUser(user).then(res =>{
-                this.props.history.push('/users');
-            });
-        }else{
-            UsersService.updateUser(user, this.state.id).then( res => {
-                this.props.history.push('/users');
-            });
-        }
+        UsersService.createUser(user).then(res => {
+            this.props.history.push('')
+        })
      }
 
     changeUsername= (event) => {
@@ -99,8 +92,8 @@ class CreateUser extends Component {
         this.setState({role: event.target.value});
     }
 
-    cancel() {
-        this.props.history.push('/users')
+    cancel(){
+        this.props.history.push('/users');
     }
 
     render() {
@@ -150,7 +143,7 @@ class CreateUser extends Component {
                                     </div>
                                     <br></br>
                                     <button class="btn btn-success" onClick={this.saveUser}> Save</button>
-                                    <button class="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}> Cancel</button>
+                                    <button className="btn btn-danger" onClick={this.cancel} style={{marginLeft: "10px"}}>Cancel</button>
                                 </form>
                             </div>
                         </div>
