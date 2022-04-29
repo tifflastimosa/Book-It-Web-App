@@ -1,33 +1,29 @@
 package com.libby.letsbookit.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.libby.letsbookit.model.Market;
 import java.time.LocalDateTime;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-
-@Entity(name = "market_staff")
+@Entity(name = "vendor_staff")
 @PrimaryKeyJoinColumn(name = "id")
-public class MarketStaff extends User{  // maps the properties from parent class
+public class VendorStaff extends User {
 
   @Enumerated(EnumType.STRING)
   private Roles role;
 
-  @ManyToOne(optional = true, fetch = FetchType.LAZY)
-  @JoinColumn(name = "market_id")
-  @JsonIgnore
-  private Market market;
+//  @ManyToOne(optional = true, fetch = FetchType.LAZY)
+//  @JoinColumn(name = "vendor_id")
+//  @JsonIgnore
+//  private Object vendor;
 
   /**
-   * Constructor for MarketStaff.
+   * Constructor for Vendor.
    *
    * @param username the username of the user creating a new user account.
    * @param password the password of the user.
@@ -37,43 +33,23 @@ public class MarketStaff extends User{  // maps the properties from parent class
    * @param dateOfBirth the date of birth of the user.
    * @param role the role of the user.
    */
-  public MarketStaff(String username, String password, String firstName, String lastName,
+  public VendorStaff(String username, String password, String firstName, String lastName,
       String email, LocalDateTime dateOfBirth, Roles role) {
     super(username, password, firstName, lastName, email, dateOfBirth);
     this.role = role;
   }
 
   /**
-   * Constructor with no parameters for MarketStaff.
+   * Constructor with no parameters for Vendor.
    */
-  public MarketStaff() {
-
+  public VendorStaff() {
   }
 
-  /**
-   * Gets the role of the user.
-   *
-   * @return The role of the user.
-   */
   public Roles getRole() {
-    return this.role;
+    return role;
   }
 
-  /**
-   * Setter for the role of the user.
-   *
-   * @param role The role of the user.
-   */
   public void setRole(Roles role) {
     this.role = role;
   }
-
-  public Market getMarket() {
-    return market;
-  }
-
-  public void setMarket(Market market) {
-    this.market = market;
-  }
-
 }
