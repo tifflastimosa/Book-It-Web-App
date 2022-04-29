@@ -2,7 +2,10 @@ package com.libby.letsbookit.controller;
 
 import com.libby.letsbookit.service.EventService;
 import com.libby.letsbookit.model.Event;
+import java.time.LocalDateTime;
 import java.util.List;
+import javax.swing.text.html.parser.Entity;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,50 +32,40 @@ public class EventController{
   @Autowired
   private EventService eventService;
 
-  // POST requests
+  // POST Request
   /**
-   * Allows the client to request to create an Event that will be added to the database.
+   * Create an Event for a Market (a Farmer's Market, Convention, etc.). Composition relationship
+   * and thus Event cannot exist without Market. In database design foreign key, market_id,
+   * cannot be null.
    *
-   * @param name the name of the event.
-   * @param start the start time of the event.
-   * @param end the end time of the event.
-   * @param location the location of the event.
-   * @param venueLayout the layout of the venue where the event will be held.
-   * @return Returns HTTP status, if the request is good or bad, and also returns the id.
+   * An event is not created when there is no market_id, market_id is a negative number,
+   * the end date is before the start date, or when the start date is before the current time.
+   *
+   * @param event Event date(s) of the Market.
+   * @param marketId The unique id of the Market record. Used to retrieve the Market.
+   * @return On successful creation, Http 201 created status, on failure, Http 400 bad request.
    */
-  @PostMapping(value = "/create")
-  public ResponseEntity<Integer> createEvent(@RequestParam(value = "name") String name,
-                                             @RequestParam(value = "start") String start,
-                                             @RequestParam(value = "end") String end,
-                                             @RequestParam(value = "location") String location,
-                                             @RequestParam(value = "venueLayout") String venueLayout) {
+  @PostMapping(value = "/{marketId}/add-event")
+  public ResponseEntity<Event> addEvent(@RequestBody Event event,
+                                        @PathVariable(value = "marketId") Integer marketId) {
     try {
-      return new ResponseEntity<>(
-          this.eventService.createEventNoMarket(name, start, end, location, venueLayout), HttpStatus.OK);
-      } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-      }
-    }
-
-    @PostMapping(value = "/create/{marketId}")
-    public ResponseEntity<Integer> associateMarketToEvent(
-                                                          @PathVariable(value = "marketId", required = false) Integer marketId,
-                                                          @RequestParam(value = "name") String name,
-                                                          @RequestParam(value = "start") String start,
-                                                          @RequestParam(value = "end") String end,
-                                                          @RequestParam(value = "location") String location,
-                                                          @RequestParam(value = "venueLayout") String venueLayout) {
-      try {
-        return new ResponseEntity<>(this.eventService.associateEvent(marketId,
-                                                                     name,
-                                                                     start,
-                                                                     end,
-                                                                     location,
-                                                                     venueLayout), HttpStatus.OK);
-      } catch (Exception e) {
+      // In Postman, on successful creation will get 201 created status
+      LocalDateTime currentTime = LocalDateTime.now();
+      // Logic exists here to provide client feedback to client
+      if (marketId > 0
+          && event.getStart().isBefore(event.getEnd())
+          && event.getStart().isAfter(currentTime)) {
+        return new ResponseEntity<>(this.eventService.addEvent(event, marketId),
+                                    HttpStatus.CREATED);
+      } else {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
+    } catch (Exception e) {
+      // otherwise
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+  }
+
   // GET requests
 
   /**

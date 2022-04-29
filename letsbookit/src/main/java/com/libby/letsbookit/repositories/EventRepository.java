@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Repository
 public interface EventRepository extends JpaRepository<Event,Integer> {
 
+  /**
+   * Method gets all events when a location.
+   *
+   * @param location The location of the Event.
+   * @return A list of all givens at a given location.
+   */
   @Query("SELECT e FROM Event e WHERE e.location=:location")
   List<Event> findEventByLocation(@PathVariable(value = "location") String location);
 }

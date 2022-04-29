@@ -75,6 +75,6 @@ public abstract class UserService<T extends User> implements IUserService {
   @Override
   public void deleteUser(Integer id) {
     this.userRepository.deleteById(id);
-
   }
+
 }

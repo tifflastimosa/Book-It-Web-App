@@ -1,6 +1,7 @@
 package com.libby.letsbookit.service;
 
 import com.libby.letsbookit.model.Event;
+import com.libby.letsbookit.model.Market;
 import com.libby.letsbookit.repositories.EventRepository;
 import com.libby.letsbookit.repositories.MarketRepository;
 import java.time.LocalDateTime;
@@ -22,6 +23,13 @@ public class EventService {
   private LocalDateTime helperDateConverter(String date) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     return LocalDateTime.parse(date,formatter);
+  }
+
+  // POST request
+  public Event addEvent(Event event, Integer marketId) {
+    Market market = this.marketRepository.getById(marketId);
+    event.setMarket(market);
+    return this.eventRepository.save(event);
   }
 
   /**

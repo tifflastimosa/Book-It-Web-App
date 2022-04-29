@@ -9,7 +9,7 @@ class UserService {
 
     // get all users
     getUsers() {
-        return axios.get(USERS_API_BASE_URL + '/');
+        return axios.get(USERS_API_BASE_URL + '/all');
     }
 
     // get user by id
@@ -19,7 +19,8 @@ class UserService {
 
     // POST
     createUser(user) {
-        return axios.post(USERS_API_BASE_URL, user)
+        const add_user = USERS_API_BASE_URL + '/add-user'
+        return axios.post(add_user, user)
     }
     // PUT
 

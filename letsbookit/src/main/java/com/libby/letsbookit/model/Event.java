@@ -1,6 +1,8 @@
 package com.libby.letsbookit.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,36 +17,43 @@ import javax.persistence.Table;
 /*
 A class that represents an event that is scheduled to occur at a market.
 */
-
 @Entity
 @Table(name = "events")
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty
     private Integer id;
 
     @Column(name = "event_name")
+    @JsonProperty
     private String name;
 
     @Column(name = "start")
+    @JsonProperty
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime start;
 
     @Column(name = "end")
+    @JsonProperty
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime end;
 
     @Column(name = "location")
+    @JsonProperty
     private String location;
 
     @Column(name = "venue_Layout")
+    @JsonProperty
     private String venueLayout;
 
-    // TODO: implement market for next milestone
+    // creates the 1(market) to many(event) relationship
+    // market is the foreign key
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "market_id")
     @JsonIgnore
     private Market market;
-
 
   /**
    * Constructor for Event.
@@ -66,9 +75,10 @@ public class Event {
 
     }
 
-
+  /**
+   * Constructor for Event.
+   */
   public Event() {
-
   }
 
   /**
@@ -169,7 +179,5 @@ public class Event {
    * @param venueLayout The venue layout of the event.
    */
   public void setVenueLayout(String venueLayout) {this.venueLayout = venueLayout; }
-
-
 
 }
