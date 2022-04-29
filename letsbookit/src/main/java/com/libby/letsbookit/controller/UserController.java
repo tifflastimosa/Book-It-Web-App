@@ -8,6 +8,8 @@ import com.libby.letsbookit.service.userservice.IUserService;
 import com.libby.letsbookit.service.userservice.MarketStaffService;
 import com.libby.letsbookit.model.User.User;
 import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,8 +70,8 @@ public class UserController {
    * @return The Market assigned to the MarketStaff.
    */
   @PutMapping(value = "/{id}/{market_id}")
-  public ResponseEntity<Market> userAddsExistingMarket(@PathVariable("id") Integer id,
-                                                        @PathVariable("market_id") Integer marketId) {
+  public ResponseEntity<Market> userAddsExistingMarket(@PathVariable("id") @Positive Integer id,
+                                                       @PathVariable("market_id") @Positive Integer marketId) {
     try {
       return new ResponseEntity<>(
           this.marketStaffService.userToMarket(id, marketId), HttpStatus.OK);
@@ -86,8 +88,8 @@ public class UserController {
    * @return Returns the MarketStaff with updated information.
    */
   @PutMapping(value = "/update/{id}")
-  public ResponseEntity<MarketStaff> updateUser(@PathVariable("id") Integer id,
-                                            @RequestBody MarketStaff user) {
+  public ResponseEntity<MarketStaff> updateUser(@PathVariable("id") @Positive Integer id,
+                                                @RequestBody MarketStaff user) {
     try {
       return new ResponseEntity<>(this.marketStaffService.updateUser(id, user), HttpStatus.OK);
     } catch (Exception e) {
@@ -104,10 +106,10 @@ public class UserController {
    */
   @GetMapping(value = "/all")
   public ResponseEntity<List<User>> getAllUsers() {
-    List<User> users = this.userService.getAll();
-    if (!users.isEmpty()) {
+    try {
+      List<User> users = this.userService.getAll();
       return new ResponseEntity<>(users, HttpStatus.OK);
-    } else {
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
   }
@@ -120,13 +122,15 @@ public class UserController {
    * users in the database.
    */
   @GetMapping(value = "/{id}")
-  public ResponseEntity<User> getUser(@PathVariable Integer id) {
-    User user = this.userService.getById(id);
-    if (user != null) {
-      return new ResponseEntity<>(user, HttpStatus.OK);
-    } else {
+  public ResponseEntity<User> getUser(@PathVariable @Min(value = 1) Integer id) {
+    try {
+      User user = this.userService.getById(id);
+      if (user != null) {
+      return new ResponseEntity<>(user, HttpStatus.OK);}
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   // DELETE Request
@@ -137,7 +141,7 @@ public class UserController {
    * @return Returns HTTP status, if the request is good or bad.
    */
   @DeleteMapping(value = "/delete/{id}")
-  public ResponseEntity<HttpStatus> deletePlace(@PathVariable("id") Integer id) {
+  public ResponseEntity<HttpStatus> deletePlace(@PathVariable("id") @Min(value = 1) Integer id) {
     try {
       this.userService.deleteUser(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -145,5 +149,4 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
-
 }

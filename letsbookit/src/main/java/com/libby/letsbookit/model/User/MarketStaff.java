@@ -76,11 +76,4 @@ public class MarketStaff extends User{  // maps the properties from parent class
     this.market = market;
   }
 
-  @Override
-  public String toString() {
-    return "MarketStaff{" +
-        "role=" + role +
-        ", market=" + market +
-        '}';
-  }
 }
