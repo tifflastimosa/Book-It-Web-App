@@ -1,11 +1,13 @@
 package com.libby.letsbookit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -22,36 +24,67 @@ public class Stand {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  // TODO: Verify if this is properly implemented
-  @JoinColumn(name="event_Id")
-  private Integer eventId;
-
   @Column(name = "table_name")
-  private String tableName;
+  private String name;
   @Column(name = "table_notes")
-  private String tableNotes;
+  private String notes;
   @Column(name = "booked")
   private Boolean booked;
   @Column(name = "price")
   private Float price;
 
+  // TODO: Verify if this is properly implemented
+  @ManyToOne
+  @JoinColumn(name="event_id")
+  @JsonIgnore
+  private Event event;
+
+  @ManyToOne
+  @JoinColumn(name = "vendor_id")
+  @JsonIgnore
+  private Vendor vendor;
+
+  // TODO: Verify that this is right!
+  /**
+   * Constructor for unbooked stand.
+   *
+   * @param name the table name that helps identify the stand.
+   * @param notes the table notes that describe the stand.
+   * @param price the price it costs to rent the stand.
+   * @param event the event the stand belongs to.
+   */
+  public Stand(String name, String notes, Float price, Event event) {
+
+    this.name = name;
+    this.notes = notes;
+    this.booked = null;
+    this.price = price;
+    this.event = event;
+    this.vendor = null;
+  }
+
   /**
    * Constructor for stand.
    *
-   * @param eventId the id of the event the stand belongs to.
-   * @param tableName the table name that helps identify the stand.
-   * @param tableNotes the table notes that describe the stand.
+   * @param name the table name that helps identify the stand.
+   * @param notes the table notes that describe the stand.
    * @param booked the booked status of the stand.
    * @param price the price it costs to rent the stand.
+   * @param event the event the stand belongs to.
+   * @param vendor the vendor that has booked the stand.
    */
-  public Stand(Integer eventId, String tableName, String tableNotes,
-      Boolean booked, Float price) {
-    this.eventId = eventId;
-    this.tableName = tableName;
-    this.tableNotes = tableNotes;
+  public Stand(String name, String notes,
+      Boolean booked, Float price, Event event, Vendor vendor) {
+
+    this.name = name;
+    this.notes = notes;
     this.booked = booked;
     this.price = price;
+    this.event = event;
+    this.vendor = vendor;
   }
+
+
 
   /**
    * Constructor with no parameters for Stand.
@@ -77,40 +110,24 @@ public class Stand {
     this.id = id;
   }
 
-  /**
-   * Gets the id of the event the stand belongs to.
-   *
-   * @return The id of the associated event.
-   */
-  public Integer getEventId() {
-    return eventId;
-  }
 
-  /**
-   * Sets the event id of the associated event.
-   *
-   * @param eventId The id of the associated event.
-   */
-  public void setEventId(Integer eventId) {
-    this.eventId = eventId;
-  }
 
   /**
    * Gets the table name of the stand.
    *
    * @return The table name of the stand.
    */
-  public String getTableName() {
-    return tableName;
+  public String getName() {
+    return name;
   }
 
   /**
    * Sets the table name of the stand.
    *
-   * @param tableName The table name of the stand.
+   * @param name The table name of the stand.
    */
-  public void setTableName(String tableName) {
-    this.tableName = tableName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -118,17 +135,17 @@ public class Stand {
    *
    * @return The table notes of the stand.
    */
-  public String getTableNotes() {
-    return tableNotes;
+  public String getNotes() {
+    return notes;
   }
 
   /**
    * Sets teh table notes of the stand.
    *
-   * @param tableNotes The table notes of the stand.
+   * @param notes The table notes of the stand.
    */
-  public void setTableNotes(String tableNotes) {
-    this.tableNotes = tableNotes;
+  public void setNotes(String notes) {
+    this.notes = notes;
   }
 
   /**
@@ -167,4 +184,39 @@ public class Stand {
     this.price = price;
   }
 
+  /**
+   * Gets the event the stand belongs to.
+   *
+   * @return The associated event.
+   */
+  public Event getEvent() {
+    return event;
+  }
+
+  /**
+   * Sets the associated event.
+   *
+   * @param event The associated event.
+   */
+  public void setEvent(Event event) {
+    this.event = event;
+  }
+
+  /**
+   * Gets the vendor that booked the stand.
+   *
+   * @return The associated vendor.
+   */
+  public Vendor getVendor() {
+    return vendor;
+  }
+
+  /**
+   * Sets the vendor that has the stand booked.
+   *
+   * @param vendor The associated vendor.
+   */
+  public void setVendor(Vendor vendor) {
+    this.vendor = vendor;
+  }
 }
