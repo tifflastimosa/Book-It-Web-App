@@ -1,12 +1,14 @@
 package com.libby.letsbookit.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
 
 /**
  * Class that represents a vendor.
@@ -21,21 +23,29 @@ public class Vendor {
   private Integer id;
 
   @Column(name = "vendor_name")
+  @JsonProperty
   private String name;
 
   @Column(name = "vendor_description")
+  @JsonProperty
   private String description;
 
+  // TODO: For future, will need to convert data type to long rather than into allow for larger numbers
   @Column(name = "contact_number")
+  @JsonProperty
   private Integer contactNumber;
 
   @Column(name = "contact_email")
+  @JsonProperty
+  @Email
   private String contactEmail;
 
   @Column(name = "website")
+  @JsonProperty
   private String website;
 
   @Column(name = "social_media")
+  @JsonProperty
   private String socialMedia;
 
   /**
@@ -190,4 +200,5 @@ public class Vendor {
   public void setSocialMedia(String socialMedia) {
     this.socialMedia = socialMedia;
   }
+
 }

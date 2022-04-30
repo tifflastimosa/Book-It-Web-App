@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ * Repository for events table modeled by Event class.
+ */
 @Repository
 public interface EventRepository extends JpaRepository<Event,Integer> {
 
@@ -18,4 +21,5 @@ public interface EventRepository extends JpaRepository<Event,Integer> {
    */
   @Query("SELECT e FROM Event e WHERE e.location=:location")
   List<Event> findEventByLocation(@PathVariable(value = "location") String location);
+
 }
