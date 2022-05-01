@@ -12,9 +12,11 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 
-@Entity(name = "market_staff")
+@Entity
+@Table(name = "market_staff")
 @PrimaryKeyJoinColumn(name = "id")
 public class MarketStaff extends User{  // maps the properties from parent class
 

@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 public abstract class UserService<T extends User> implements IUserService {
 
   // connects to the repository
+  @Qualifier("marketStaffRepository")
   @Autowired
   private UserBaseRepository userRepository;
 

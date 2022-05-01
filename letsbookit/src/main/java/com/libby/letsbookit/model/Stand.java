@@ -56,46 +56,21 @@ public class Stand {
   private Vendor vendor;
 
   // TODO: Verify that this is right!
-  /**
-   * Constructor for unbooked stand.
-   *
-   * @param name the table name that helps identify the stand.
-   * @param notes the table notes that describe the stand.
-   * @param price the price it costs to rent the stand.
-   * @param event the event the stand belongs to.
-   */
-  public Stand(String name, String notes, Float price, Event event) {
-
-    this.name = name;
-    this.notes = notes;
-    this.booked = null;
-    this.price = price;
-    this.event = event;
-    this.vendor = null;
-  }
 
   /**
-   * Constructor for stand.
+   * Constructor for Stand object.
    *
-   * @param name the table name that helps identify the stand.
-   * @param notes the table notes that describe the stand.
-   * @param booked the booked status of the stand.
-   * @param price the price it costs to rent the stand.
-   * @param event the event the stand belongs to.
-   * @param vendor the vendor that has booked the stand.
+   * @param name The name of the stand.
+   * @param notes The notes, description regarding the stand to be booked by the vendor.
+   * @param booked Boolean indicating if the stand is booked or not booked.
+   * @param price The cost to book the stand, the default value is 0.0f.
    */
-  public Stand(String name, String notes,
-      Boolean booked, Float price, Event event, Vendor vendor) {
-
+  public Stand(String name, String notes, Boolean booked, Float price) {
     this.name = name;
     this.notes = notes;
     this.booked = booked;
     this.price = price;
-    this.event = event;
-    this.vendor = vendor;
   }
-
-
 
   /**
    * Constructor with no parameters for Stand.

@@ -1,6 +1,7 @@
 package com.libby.letsbookit.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.libby.letsbookit.model.Vendor;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,18 +10,20 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-@Entity(name = "vendor_staff")
+@Entity
+@Table(name = "vendor_staff")
 @PrimaryKeyJoinColumn(name = "id")
 public class VendorStaff extends User {
 
   @Enumerated(EnumType.STRING)
   private Roles role;
 
-//  @ManyToOne(optional = true, fetch = FetchType.LAZY)
-//  @JoinColumn(name = "vendor_id")
-//  @JsonIgnore
-//  private Object vendor;
+  @ManyToOne(optional = true, fetch = FetchType.LAZY)
+  @JoinColumn(name = "vendor_id")
+  @JsonIgnore
+  private Vendor vendor;
 
   /**
    * Constructor for Vendor.

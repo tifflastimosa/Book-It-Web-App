@@ -5,6 +5,7 @@ import com.libby.letsbookit.model.Event;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.text.html.parser.Entity;
+import javax.validation.constraints.Positive;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -101,34 +102,43 @@ public class EventController{
     }
   }
 
+  /**
+   * Client request to get all events given a location.
+   *
+   * @param location The location of the event.
+   * @return A list of all Events when given a location.
+   */
+  @GetMapping(value = "/find/{location}")
+  public ResponseEntity<List<Event>> findEventByLocation(@PathVariable(value = "location") String location) {
+    try {
+      List<Event> eventsByLocation = this.eventService.getEventByLocation(location);
+      // if there are no events, then return http request that there is no content
+      if (eventsByLocation.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      }
+      // otherwise return list of events with the given location
+      return new ResponseEntity<>(this.eventService.getEventByLocation(location), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
 
-  // PUT (update) Request
+  // PUT request
 
   /**
-   * Updates an event in the database when given an id.
+   * Client request to update an Event record from the database.
    *
-   * @param name the name of the event.
-   * @param start the start time of the event.
-   * @param end the end time of the event.
-   * @param location the location of the event.
-   * @param venueLayout the layout of the venue where the event will be held.
-   * @return Returns HTTP status, if the request is good or bad, and also returns the id.
+   * @param id The unique id, primary key of the Event object to be udpated.
+   * @param event The event object that contains new information of the Event to be updated in the
+   *              database.
+   * @return The Event object with the updated information.
    */
   @PutMapping(value = "/update/{id}")
-  public ResponseEntity<Integer> updateEvent(@PathVariable(value = "id") Integer id,
-                                             @RequestParam(value = "name") String name,
-                                             @RequestParam(value = "start") String start,
-                                             @RequestParam(value = "end") String end,
-                                             @RequestParam(value = "location") String location,
-                                             @RequestParam(value = "venueLayout") String venueLayout) {
-
-    System.out.println("A");
+  public ResponseEntity<Event> updateEvent(@PathVariable(value = "id") @Positive Integer id,
+                                             @RequestBody Event event) {
     try {
-      System.out.println("B");
-      return new ResponseEntity<>(this.eventService.updateEvent(id, name, start, end, location,
-          venueLayout), HttpStatus.OK);
+      return new ResponseEntity<>(this.eventService.updateEvent(id, event), HttpStatus.OK);
     } catch (Exception e) {
-      System.out.println("C");
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
@@ -146,16 +156,6 @@ public class EventController{
     try {
       this.eventService.deleteEvent(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @GetMapping(value = "/find/{location}")
-  public ResponseEntity<List<Event>> findEventByLocation(@PathVariable(value = "location") String location) {
-    try {
-      return new ResponseEntity<>(
-          this.eventService.getEventByLocation(location), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

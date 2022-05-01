@@ -26,50 +26,28 @@ public class EventService {
   }
 
   // POST request
+
+  /**
+   * Adds an event created by the client to the database.
+   *
+   * @param event The event to be added to the database.
+   * @param marketId The market id that the event will be associated with since an event cannot
+   *                 exist without a market object.
+   * @return The event object added to the database.
+   */
   public Event addEvent(Event event, Integer marketId) {
     Market market = this.marketRepository.getById(marketId);
     event.setMarket(market);
     return this.eventRepository.save(event);
   }
 
+  // GET requests
+
   /**
-   * Provides the business logic to create an event object and then add it as a record to the
-   * database.
+   * Retrieves all the Events from the database.
    *
-   * @param name The name of the event.
-   * @param start The start time of the event.
-   * @param end The end time of the event.
-   * @param location The location of the event.
-   * @param venueLayout The layout of the venue where the event will be held.
-   * @return
+   * @return A list of all Events saved in the database.
    */
-  public Integer associateEvent(Integer marketId, String name, String start, String end,
-      String location, String venueLayout) throws Exception {
-    LocalDateTime objectStart = this.helperDateConverter(start);
-    LocalDateTime objectEnd = this.helperDateConverter(end);
-
-    Event event = new Event(name, objectStart, objectEnd, location, venueLayout);
-
-    Event eventRep =
-        this.marketRepository
-        .findById(marketId)
-            .map(market -> {event.setMarket(market);
-            return this.eventRepository.save(event);})
-            .orElseThrow(() -> new Exception("Not found"));
-    return event.getId();
-  }
-
-  public Integer createEventNoMarket(String name, String start, String end,
-      String location, String venueLayout) {
-
-    LocalDateTime objectStart = this.helperDateConverter(start);
-    LocalDateTime objectEnd = this.helperDateConverter(end);
-
-    Event event = new Event(name, objectStart, objectEnd, location, venueLayout);
-    this.eventRepository.save(event);
-    return event.getId();
-  }
-
   public List<Event> getAll() {
     return (List<Event>) this.eventRepository.findAll();
   }
@@ -80,33 +58,45 @@ public class EventService {
     return eventObject;
   }
 
-  public Integer updateEvent(Integer id, String name, String start, String end,
-      String location, String venueLayout) {
-    System.out.print("0");
-    Event event = this.getById(id);
-    System.out.print("1");
-    event.setName(name);
-    System.out.print("2");
-    event.setStart(this.helperDateConverter(start));
-    System.out.print("3");
-    event.setEnd(this.helperDateConverter(end));
-    System.out.print("4");
-    event.setLocation(location);
-    System.out.print("5");
-    event.setVenueLayout(venueLayout);
-    System.out.print("6");
-    this.eventRepository.save(event);
-    System.out.print("7");
-    return event.getId();
+  /**
+   * Retrieves all events given a location from the database.
+   *
+   * @param location The location of the event.
+   * @return A list of all Events when given a location. Filters the events by location.
+   */
+  public List<Event> getEventByLocation(String location) {
+    return this.eventRepository.findEventByLocation(location);
+
   }
 
+  // PUT request
+
+  /**
+   * Retrieves the Event with the given id from the database and updates the Event record with
+   * the provided event object.
+   *
+   * @param id The unique id, primary key of the Event object to be updated.
+   * @param event The event object to be updated.
+   * @return The Event object with the updated information.
+   */
+  public Event updateEvent(Integer id, Event event) {
+    Event fromDB = this.getById(id);
+    fromDB.setName(event.getName());
+    fromDB.setStart(event.getStart());
+    fromDB.setEnd(event.getEnd());
+    fromDB.setLocation(event.getLocation());
+    fromDB.setVenueLayout(event.getVenueLayout());
+    return this.eventRepository.save(fromDB);
+  }
+
+  // DELETE request
+  /**
+   * Deletes an Event record from the database.
+   *
+   * @param id The unique id, primary key of the Event object to be deleted from the database.
+   */
   public void deleteEvent(Integer id) {
     this.eventRepository.deleteById(id);
-  }
-
-  public List<Event> getEventByLocation(String location) {
-   return this.eventRepository.findEventByLocation(location);
-
   }
 
 }
