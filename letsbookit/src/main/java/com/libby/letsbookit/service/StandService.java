@@ -27,6 +27,13 @@ public class StandService {
   @Autowired
   private VendorService vendorService;
 
+  private Float validatePrice(Float price) {
+    if (price < 0.0f) {
+      return 0.0f;
+    }
+    return price;
+  }
+
   // POST Request
 
   /**

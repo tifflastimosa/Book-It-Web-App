@@ -3,7 +3,12 @@ package com.libby.letsbookit.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,14 +17,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /*
 A class that represents an event that is scheduled to occur at a market.
 */
 @Entity
 @Table(name = "events")
-public class Event {
+public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,8 +60,11 @@ public class Event {
     // market is the foreign key
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "market_id")
-    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Market market;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    private List<Stand> stands = new ArrayList<>();
 
   /**
    * Constructor for Event.
@@ -100,6 +111,7 @@ public class Event {
    *
    * @return the marketId of the event.
    */
+  @JsonIgnore
   public Market getMarket(){ return market; }
 
   //Not sure we want this since it's the FK for Market.
@@ -108,6 +120,7 @@ public class Event {
    *
    * @param market The id of the event.
    */
+  @JsonIgnore
   public void setMarket(Market market){ this.market = market; }
 
   /**
@@ -179,5 +192,10 @@ public class Event {
    * @param venueLayout The venue layout of the event.
    */
   public void setVenueLayout(String venueLayout) {this.venueLayout = venueLayout; }
+
+
+  public Integer getMarketId() {
+    return this.market.getId();
+  }
 
 }

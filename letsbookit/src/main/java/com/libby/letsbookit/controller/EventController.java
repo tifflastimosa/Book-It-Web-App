@@ -1,5 +1,7 @@
 package com.libby.letsbookit.controller;
 
+import com.libby.letsbookit.model.Market;
+import com.libby.letsbookit.model.Stand;
 import com.libby.letsbookit.service.EventService;
 import com.libby.letsbookit.model.Event;
 import java.time.LocalDateTime;
@@ -124,6 +126,33 @@ public class EventController{
     }
   }
 
+  /**
+   * Client request to get the market associated with the event.
+   *
+   * @param eventId The event id to get the desired event from the database.
+   * @return The Market associated with the Event.
+   */
+  @GetMapping(value = "/market/{event_id}")
+  public ResponseEntity<Market> getMarket(@PathVariable(value = "event_id") Integer eventId) {
+    try {
+      return new ResponseEntity<>(this.eventService.getMarket(eventId), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+  }
+
+  /**
+   *
+   */
+  @GetMapping(value = "/stands/{event_id}")
+  public ResponseEntity<List<Stand>> getStandsByEventId(@PathVariable("event_id") Integer id) {
+    try {
+      return new ResponseEntity<>(this.eventService.getStandsByEventId(id), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+  }
+
   // PUT request
 
   /**
@@ -166,7 +195,6 @@ public class EventController{
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
   }
-
 
   // DELETE Request
 

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 
 
@@ -43,7 +44,7 @@ public class Stand {
 
   @Column(name = "price")
   @JsonProperty
-  private Float price;
+  private Float price = 0.0f;
 
   // TODO: Verify if this is properly implemented
   @ManyToOne

@@ -8,8 +8,10 @@ import com.libby.letsbookit.repositories.MarketRepository;
 import com.libby.letsbookit.repositories.StandRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.service.NullServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +26,6 @@ public class EventService {
 
   @Autowired
   private StandRepository standRepository;
-
-  private LocalDateTime helperDateConverter(String date) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    return LocalDateTime.parse(date,formatter);
-  }
 
   // POST request
 
@@ -71,7 +68,21 @@ public class EventService {
    */
   public List<Event> getEventByLocation(String location) {
     return this.eventRepository.findEventByLocation(location);
+  }
 
+  /**
+   * Method gets the market associated with the event.
+   *
+   * @param eventId The id of the event associated with the market.
+   * @return The market associated with the eventId.
+   */
+  public Market getMarket(Integer eventId) {
+    // get event from the given id
+//    Event eventFromDB = this.getById(eventId);
+//    Integer marketId = eventFromDB.getMarket().getId();
+    Integer marketId = this.getById(eventId).getMarketId();
+    Optional<Market> marketOpt = this.marketRepository.findById(marketId);
+    return marketOpt.get();
   }
 
   // PUT request
@@ -94,17 +105,15 @@ public class EventService {
     return this.eventRepository.save(fromDB);
   }
 
-  // DELETE request
   /**
-   * Deletes an Event record from the database.
+   * Method creates multiple stands in the database associated with the event of the provided
+   * eventId.
    *
-   * @param id The unique id, primary key of the Event object to be deleted from the database.
+   * @param eventId The if of the event to be associated with the multiple stands.
+   * @param numStands The number stands to be created in the database.
+   * @param price The cost of the stand set by the client.
+   * @return On successful addition of all stands returns the number stands added to the database.
    */
-  public void deleteEvent(Integer id) {
-    this.eventRepository.deleteById(id);
-  }
-
-
   public Integer createStands(Integer eventId, Integer numStands, Float price) {
     // iterate through the num stands want to create at the event
     for (int i = 0; i < numStands; i++) {
@@ -118,5 +127,25 @@ public class EventService {
     return numStands;
   }
 
+  // DELETE request
+  /**
+   * Deletes an Event record from the database.
+   *
+   * @param id The unique id, primary key of the Event object to be deleted from the database.
+   */
+  public void deleteEvent(Integer id) {
+    this.eventRepository.deleteById(id);
+  }
+
+
+  public List<Stand> getStandsByEventId(Integer eventId) {
+    List<Stand> stands = new ArrayList<>();
+    for (Stand stand : this.standRepository.findAll()) {
+      if (stand.getEvent().getId().equals(eventId)) {
+        stands.add(stand);
+      }
+    }
+    return stands;
+  }
 
 }

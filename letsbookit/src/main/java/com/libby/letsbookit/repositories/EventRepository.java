@@ -1,6 +1,7 @@
 package com.libby.letsbookit.repositories;
 
 import com.libby.letsbookit.model.Event;
+import com.libby.letsbookit.model.Stand;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
