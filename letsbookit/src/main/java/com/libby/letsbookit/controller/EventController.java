@@ -5,6 +5,7 @@ import com.libby.letsbookit.model.Event;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.text.html.parser.Entity;
+import javax.validation.Path;
 import javax.validation.constraints.Positive;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,6 +143,30 @@ public class EventController{
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
+
+  /**
+   * Client request that takes in an integer for number of stands wanting to create in database and
+   * the price the client wants to set for vendors to book the stand. Method creates multiple
+   * stands in the database.
+   *
+   * @param eventId The id of the event to be associated with the stands created.
+   * @param numStands The number of stands to be created in the stands table in the database.
+   * @param price The cost of the stand to book.
+   * @return On successful creation of the stands, it returns the number of stands added to the
+   * database.
+   */
+  @PutMapping(value = "/{id}/create-stands/{num}/{price}")
+  public ResponseEntity<Integer> createStands(@PathVariable("id") Integer eventId,
+      @PathVariable("num") Integer numStands,
+      @PathVariable("price") Float price) {
+    try {
+      this.eventService.createStands(eventId, numStands, price);
+      return new ResponseEntity<>(numStands, HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+  }
+
 
   // DELETE Request
 

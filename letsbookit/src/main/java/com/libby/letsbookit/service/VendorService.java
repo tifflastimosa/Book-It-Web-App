@@ -41,7 +41,7 @@ public class VendorService {
    * @param id the primary key, unique id of the vendor.
    * @return The vendor of the assigned id number.
    */
-  public Vendor findVendorById(Integer id) {
+  public Vendor getVendorById(Integer id) {
     Optional<Vendor> vendor = this.vendorRepository.findById(id);
     return vendor.get();
   }
@@ -55,7 +55,7 @@ public class VendorService {
    * @return The vendor with the updated information.
    */
   public Vendor updateVendor(Integer id, Vendor vendor) {
-    Vendor fromDB = this.findVendorById(id);
+    Vendor fromDB = this.getVendorById(id);
     fromDB.setName(vendor.getName());
     fromDB.setDescription(vendor.getDescription());
     fromDB.setContactNumber(vendor.getContactNumber());

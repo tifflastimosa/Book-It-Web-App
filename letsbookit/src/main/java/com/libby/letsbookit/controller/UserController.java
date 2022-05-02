@@ -167,12 +167,10 @@ public class UserController {
   public ResponseEntity<User> getUser(@PathVariable @Min(value = 1) Integer id) {
     try {
       User user = this.userService.getById(id);
-      if (user != null) {
-      return new ResponseEntity<>(user, HttpStatus.OK);}
+      return new ResponseEntity<>(user, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>(this.vendorStaffService.getById(id), HttpStatus.OK);
     }
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   /**
@@ -212,6 +210,7 @@ public class UserController {
   }
 
   // DELETE Request
+
   /**
    * Client request to delete a user from the database when given an id.
    *
@@ -224,7 +223,8 @@ public class UserController {
       this.userService.deleteUser(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      this.vendorStaffService.deleteUser(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
   }
 

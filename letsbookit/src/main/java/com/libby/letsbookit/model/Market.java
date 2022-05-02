@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
 
 /**
  * Class that represents a market.
@@ -48,6 +49,7 @@ public class Market {
   private Integer contactNumber;
 
   @Column(name = "contact_email")
+  @Email
   @JsonProperty
   private String contactEmail;
 

@@ -91,4 +91,8 @@ public class VendorStaffService extends UserService {
     return this.userBaseRepository.findAll();
   }
 
+  @Override
+  public void deleteUser(Integer id) {
+    this.vendorStaffRepository.deleteById(id);
+  }
 }

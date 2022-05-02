@@ -2,6 +2,8 @@ package com.libby.letsbookit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.libby.letsbookit.deserializer.FloatDeserializer;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +43,7 @@ public class Stand {
 
   @Column(name = "price")
   @JsonProperty
-  @Positive
-  private Float price = 0.0f;
+  private Float price;
 
   // TODO: Verify if this is properly implemented
   @ManyToOne
@@ -204,5 +205,18 @@ public class Stand {
    */
   public void setVendor(Vendor vendor) {
     this.vendor = vendor;
+  }
+
+  @Override
+  public String toString() {
+    return "Stand{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", notes='" + notes + '\'' +
+        ", booked=" + booked +
+        ", price=" + price +
+        ", event=" + event +
+        ", vendor=" + vendor +
+        '}';
   }
 }
