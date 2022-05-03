@@ -142,7 +142,10 @@ public class EventController{
   }
 
   /**
+   * Client request that gets the list of stands that is associated with an event.
    *
+   * @param id The id of the event object to be associated with the list of stands.
+   * @return The list of stands associated with the event.
    */
   @GetMapping(value = "/stands/{event_id}")
   public ResponseEntity<List<Stand>> getStandsByEventId(@PathVariable("event_id") Integer id) {
@@ -167,10 +170,30 @@ public class EventController{
   public ResponseEntity<Event> updateEvent(@PathVariable(value = "id") @Positive Integer id,
                                              @RequestBody Event event) {
     try {
-      return new ResponseEntity<>(this.eventService.updateEvent(id, event), HttpStatus.OK);
+      LocalDateTime currentTime = LocalDateTime.now();
+      if (id > 0
+          && event.getStart().isBefore(event.getEnd())
+          && event.getStart().isAfter(currentTime)) {
+        return new ResponseEntity<>(this.eventService.updateEvent(id, event), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+  }
+
+  /**
+   * Helper method that validates price.
+   *
+   * @param price The cost to book the stand.
+   * @return Returns 0.0f if the param is negative, otherwise returns the price equal to the param.
+   */
+  private Float validatePrice(Float price) {
+    if (price < 0.0f) {
+      return 0.0f;
+    }
+    return price;
   }
 
   /**
@@ -186,10 +209,10 @@ public class EventController{
    */
   @PutMapping(value = "/{id}/create-stands/{num}/{price}")
   public ResponseEntity<Integer> createStands(@PathVariable("id") Integer eventId,
-      @PathVariable("num") Integer numStands,
-      @PathVariable("price") Float price) {
+                                              @PathVariable("num") Integer numStands,
+                                              @PathVariable("price") Float price) {
     try {
-      this.eventService.createStands(eventId, numStands, price);
+      this.eventService.createStands(eventId, numStands, this.validatePrice(price));
       return new ResponseEntity<>(numStands, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);

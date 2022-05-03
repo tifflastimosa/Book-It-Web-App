@@ -27,13 +27,6 @@ public class StandService {
   @Autowired
   private VendorService vendorService;
 
-  private Float validatePrice(Float price) {
-    if (price < 0.0f) {
-      return 0.0f;
-    }
-    return price;
-  }
-
   // POST Request
 
   /**
@@ -85,12 +78,9 @@ public class StandService {
     fromDB.setNotes(stand.getNotes());
     fromDB.setBooked(stand.getBooked());
     fromDB.setPrice(stand.getPrice());
-    fromDB.setEvent(stand.getEvent());
     fromDB.setVendor(stand.getVendor());
     return this.standRepository.save(fromDB);
   }
-
-
 
   /**
    * Deletes a stand from the database when given the unique id/primary key of the stand.
@@ -100,6 +90,5 @@ public class StandService {
   public void deleteStand(Integer id) {
     this.standRepository.deleteById(id);
   }
-
 
 }

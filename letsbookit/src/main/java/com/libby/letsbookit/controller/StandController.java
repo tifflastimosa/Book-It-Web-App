@@ -39,6 +39,19 @@ public class StandController {
 
 
   /**
+   * Helper method that validates price.
+   *
+   * @param price The cost to book the stand.
+   * @return Returns 0.0f if the param is negative, otherwise returns the price equal to the param.
+   */
+  private Float validatePrice(Float price) {
+    if (price < 0.0f) {
+      return 0.0f;
+    }
+    return price;
+  }
+
+  /**
    * Client request to add a stand to the database.
    *
    * @param eventId The stand the event is associated with.
@@ -47,8 +60,9 @@ public class StandController {
    */
   @PostMapping(value = "/{event_id}/add-stand")
   public ResponseEntity<Stand> addStandToEvent(@PathVariable("event_id") Integer eventId,
-                            @RequestBody Stand stand) {
+                                               @RequestBody Stand stand) {
     try {
+      stand.setPrice(this.validatePrice(stand.getPrice()));
       return new ResponseEntity<>(this.standService.addStand(eventId, stand), HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -91,15 +105,17 @@ public class StandController {
   // PUT Request
 
   /**
-   * Client
-   * @param id
-   * @param stand
-   * @return
+   * Client request to update the stand information.
+   *
+   * @param id Te id of the stand to be updated.
+   * @param stand The stand that contains the updated information.
+   * @return The stand with the updated information.
    */
   @PutMapping(value = "/update/{id}")
   public ResponseEntity<Stand> updateStand(@PathVariable("id") @Positive Integer id,
                                            @RequestBody Stand stand) {
     try {
+      stand.setPrice(this.validatePrice(stand.getPrice()));
       return new ResponseEntity<>(this.standService.updateStand(id, stand), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -123,9 +139,5 @@ public class StandController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
   }
-
-
-
-
 
 }
