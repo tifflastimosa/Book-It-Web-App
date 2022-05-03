@@ -85,6 +85,23 @@ public class EventService {
     return marketOpt.get();
   }
 
+
+  /**
+   * Method gets the list of stands associated with the event.
+   *
+   * @param eventId The id of the event associated with the list of stands.
+   * @return The list of stands associated with the event.
+   */
+  public List<Stand> getStandsByEventId(Integer eventId) {
+    List<Stand> stands = new ArrayList<>();
+    for (Stand stand : this.standRepository.findAll()) {
+      if (stand.getEvent().getId().equals(eventId)) {
+        stands.add(stand);
+      }
+    }
+    return stands;
+  }
+
   // PUT request
 
   /**
@@ -135,17 +152,6 @@ public class EventService {
    */
   public void deleteEvent(Integer id) {
     this.eventRepository.deleteById(id);
-  }
-
-
-  public List<Stand> getStandsByEventId(Integer eventId) {
-    List<Stand> stands = new ArrayList<>();
-    for (Stand stand : this.standRepository.findAll()) {
-      if (stand.getEvent().getId().equals(eventId)) {
-        stands.add(stand);
-      }
-    }
-    return stands;
   }
 
 }
