@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import HeaderComponent from './components/HeaderComponent';
 import ListUsers from './components/Users/ListUsersComponent';
 import FooterComponent from './components/FooterComponent';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
@@ -10,15 +9,17 @@ import "bootswatch/dist/minty/bootstrap.min.css"
 import ListEvents from './components/Events/ListEventsComponent';
 import ListMarkets from './components/Market/ListMarketsComponent';
 import CreateUser from './components/Users/CreateUserComponent';
-
+import LandingPage from './components/LandingPageComponent';
+import UpdateUser from './components/Users/UpdateUserComponent';
 // root component to render inside reactDOM
 function App() {
   return (
     <BrowserRouter>
     <React.Fragment>
+      {/* create the navbar */}
       <Navbar variant="dark" bg="primary">
         <Container>
-          <Navbar.Brand as={Link} to={'/'}> Lets Book It! </Navbar.Brand>
+          <Navbar.Brand as={Link} to={'/'}> Let's Book It! </Navbar.Brand>
 
             <Nav className="me-auto">   
 
@@ -27,58 +28,28 @@ function App() {
               <Nav.Link as={Link} to={'/events'} className="nav-link"> Events </Nav.Link>
 
             </Nav>
-
         </Container>
-        
       </Navbar>
 
-      <Container>
-      <div id="demo" class="carousel slide" data-ride="carousel">
-
-<ul class="carousel-indicators">
-  <li data-target="#demo" data-slide-to="0" class="active"></li>
-  <li data-target="#demo" data-slide-to="1"></li>
-  <li data-target="#demo" data-slide-to="2"></li>
-</ul>
-
-
-<div class="carousel-inner">
-  <div class="carousel-item active">
-   <h3>1</h3>
-  </div>
-  <div class="carousel-item">
-  <h3>Hello2</h3>
-  </div>
-  <div class="carousel-item">
-  <h3>Hello3</h3>
-  </div>
-</div>
-
-
-<a class="carousel-control-prev" href="#demo" data-slide="prev">
-  <span class="carousel-control-prev-icon"></span>
-</a>
-<a class="carousel-control-next" href="#demo" data-slide="next">
-  <span class="carousel-control-next-icon"></span>
-</a>
-
-</div>
-     
-      </Container>
+      {/* container for links in the navbar */}
       <Container>
       <br></br>
       <Routes>
-        <Route exact path='/'> </Route>
+        <Route exact path='/' element={<LandingPage />}></Route>
         <Route exact path='/users' element={<ListUsers />}></Route>
         <Route exact path='/users/create' element={<CreateUser />}></Route>
+        <Route exact path='/users/update' element={<UpdateUser />}></Route>
         <Route exact path='/markets' element={<ListMarkets />}></Route>
         <Route exact path='/events' element={<ListEvents />}></Route>
       </Routes>
       </Container>
+      
+      <center><FooterComponent></FooterComponent></center>
     </React.Fragment>
     </BrowserRouter>
   
   );
 }
+
 
 export default App;

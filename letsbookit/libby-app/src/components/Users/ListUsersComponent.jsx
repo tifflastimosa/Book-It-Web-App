@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UsersService from "../../services/UsersService";
 import { Link } from "react-router-dom";
 
+
 // building the component to call into App so that it will display
 class ListUsers extends Component {
     constructor(props) {
@@ -12,8 +13,7 @@ class ListUsers extends Component {
         // bind event in constructor
         this.deleteUserById = this.deleteUserById.bind(this);
         this.addUser = this.addUser.bind(this);
-
-
+        this.updateUser = this.updateUser.bind(this);
     }
 
     // call rest api all - use component mount
@@ -25,11 +25,11 @@ class ListUsers extends Component {
     }
 
     addUser() {
-        this.props.history.push('/users/create');
+        this.props.history.push(`/users/create`);
     }
 
     viewUser(id) {
-        this.props.history.push(`/view-employee/${id}`);
+        this.props.history.push(`/view-user/${id}`);
     }
 
     deleteUserById(id) {
@@ -38,8 +38,9 @@ class ListUsers extends Component {
         })
     }
 
+    updateUser() {
 
-
+    }
 
     render() {
         return (
@@ -69,7 +70,7 @@ class ListUsers extends Component {
                                         <td> {user.id} </td>
                                         <td> {user.firstName} </td>
                                         <td> {user.lastName} </td>
-                                        <td><button style={{marginLeft: "10px"}} className="btn btn-info"> Update </button></td>
+                                        <td><button onClick={ () => this.updateUser(user.id)} className="btn btn-info">Update</button></td>
                                         <td><button style={{marginLeft: "10px"}} onClick={ () => this.deleteUserById(user.id)} className="btn btn-secondary">Delete </button></td>
                                     </tr>
                                 )
@@ -84,5 +85,7 @@ class ListUsers extends Component {
     }
 
 }
+
+
 
 export default ListUsers;

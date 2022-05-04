@@ -19,13 +19,14 @@ class UserService {
 
     // POST
     createUser(user) {
-        const add_user = USERS_API_BASE_URL + '/add-user'
+        const add_user = USERS_API_BASE_URL + '/add-user-market'
         return axios.post(add_user, user)
     }
     // PUT
 
     updateUser(user, userId){
-        return axios.put(USERS_API_BASE_URL + '/update/' + userId);
+        const udpate_user = USERS_API_BASE_URL + '/update/' + userId;
+        return axios.put(udpate_user, user);
     }
 
     // DELETE
